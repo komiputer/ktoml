@@ -19,7 +19,9 @@ kotlin {
     kotlinDaemonJvmArgs = listOf("-Xss30m", "-XX:MaxMetaspaceSize=1g")
 
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        // formver.annotations (pulled in at runtime by the formver plugin) publishes Gradle module
+        // metadata requiring JVM 21; bumped from 8 for this reason (fork divergence, ktoml-core only).
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 
     js(IR) {
@@ -29,7 +31,7 @@ kotlin {
 
     jvm {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_1_8)
+            jvmTarget.set(JvmTarget.JVM_21)
         }
     }
 
