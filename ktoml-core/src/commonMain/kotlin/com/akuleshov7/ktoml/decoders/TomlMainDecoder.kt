@@ -16,6 +16,7 @@ import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.modules.EmptySerializersModule
 import kotlinx.serialization.modules.SerializersModule
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * Main entry point into the decoding process. It can create less common decoders inside, for example:
@@ -66,6 +67,8 @@ public class TomlMainDecoder(
      * |--- child1, child2, ... , childN
      * ------------elementIndex------->
      */
+    // Not verified: `elementIndex - 1` is unbounded: no invariant ties elementIndex to the node count.
+    @NeverVerify
     private fun getCurrentNode() = rootNode.getNeighbourNodes().elementAt(elementIndex - 1)
 
     /**
@@ -102,6 +105,8 @@ public class TomlMainDecoder(
         }
     }
 
+    // Not verified: the element counter has no upper bound, so `++` may overflow.
+    @NeverVerify
     override fun decodeElementIndex(descriptor: SerialDescriptor): Int {
         if (isDecodingDone()) {
             return CompositeDecoder.DECODE_DONE
@@ -152,6 +157,8 @@ public class TomlMainDecoder(
         }
     }
 
+    // Not verified: the element counter has no upper bound, so `++` may overflow.
+    @NeverVerify
     private fun iterateUntilWillFindAnyKnownName(descriptor: SerialDescriptor): Int {
         while (true) {
             if (isDecodingDone()) {
@@ -236,6 +243,8 @@ public class TomlMainDecoder(
      * Entry Point into the logic, core logic of the structure traversal and linking the data from TOML AST
      * to the descriptor and vica-versa. Basically this logic is used to iterate through data structures and do processing.
      */
+    // Not verified: `elementIndex - 1` is unbounded: no invariant ties elementIndex to the node count.
+    @NeverVerify
     private fun iterateOverTomlStructure(descriptor: SerialDescriptor, inlineFunc: Boolean): TomlAbstractDecoder =
         if (rootNode is TomlFile) {
             checkMissingRequiredProperties(rootNode.children, descriptor)

@@ -1,0 +1,11 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -301,7 +301,7 @@
+ internal fun firstBadEscape(s: String): Int {
+     postconditions<Int> { r ->
+         r == -1 || (0 <= r && r < s.length)
+-        (r != -1) implies (s[r] == '\\')
++        s[r] == '\\'
+     }
+     var i = 0
+     while (i < s.length) {

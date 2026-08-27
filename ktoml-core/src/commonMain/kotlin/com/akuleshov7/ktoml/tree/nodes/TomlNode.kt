@@ -11,6 +11,7 @@ import com.akuleshov7.ktoml.exceptions.InternalAstException
 import com.akuleshov7.ktoml.tree.nodes.pairs.keys.TomlKey
 import com.akuleshov7.ktoml.tree.nodes.pairs.values.TomlValue
 import com.akuleshov7.ktoml.writers.TomlEmitter
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 public const val EMPTY_TECHNICAL_NODE: String = "technical_node"
 
@@ -152,6 +153,8 @@ public sealed class TomlNode(
     /**
      * @param child that will be added to this parent
      */
+    // Not verified: `add` needs a size bound below Int.MAX_VALUE on the children list.
+    @NeverVerify
     public fun appendChild(child: TomlNode) {
         children.add(child)
         child.parent = this

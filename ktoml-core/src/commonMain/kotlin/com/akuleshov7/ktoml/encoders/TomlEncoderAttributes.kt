@@ -3,6 +3,7 @@ package com.akuleshov7.ktoml.encoders
 import com.akuleshov7.ktoml.annotations.*
 import com.akuleshov7.ktoml.exceptions.TomlWritingException
 import com.akuleshov7.ktoml.writers.IntegerRepresentation
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * @property parent The parent to inherit default values from.
@@ -40,6 +41,8 @@ public data class TomlEncoderAttributes(
                     "Please ensure your value is wrapped and given a proper name."
         )
 
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     public fun child(): TomlEncoderAttributes = copy(parent = copy(), isImplicit = false)
 
     public fun set(annotations: Iterable<Annotation>) {

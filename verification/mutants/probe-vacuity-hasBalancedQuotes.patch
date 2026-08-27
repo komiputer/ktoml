@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+index 776f5ac..7fd304b 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -103,6 +103,7 @@ internal fun countChar(s: String, c: Char): Int {
+  * ktoml: `String.validateQuotes`, as a predicate rather than a thrown ParseException.
+  */
+ internal fun hasBalancedQuotes(s: String): Boolean {
++    verify(false)
+     return countChar(s, '"') % 2 == 0 && countChar(s, '\'') % 2 == 0
+ }
+ 

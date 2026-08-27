@@ -1,3 +1,5 @@
+@file:Suppress("LOCALITY_CONTRACT_MISMATCH")
+
 package com.akuleshov7.ktoml.encoders
 
 import com.akuleshov7.ktoml.annotations.TomlInlineTable

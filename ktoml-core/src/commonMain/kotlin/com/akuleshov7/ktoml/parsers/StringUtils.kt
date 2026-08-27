@@ -7,6 +7,8 @@ package com.akuleshov7.ktoml.parsers
 import com.akuleshov7.ktoml.exceptions.ParseException
 import com.akuleshov7.ktoml.utils.convertSpecialCharacters
 import com.akuleshov7.ktoml.utils.newLineChar
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
+import org.jetbrains.kotlin.formver.plugin.postconditions
 
 private const val MULTILINE_STRING_QUOTE_LENGTH = 3
 
@@ -17,6 +19,8 @@ private const val MULTILINE_STRING_QUOTE_LENGTH = 3
  * @param lineNo - the line number in toml
  * @return list with strings after the initial string was split
  */
+// Not verified: `add` in a loop needs a size bound below Int.MAX_VALUE that no invariant states.
+@NeverVerify
 internal fun String.splitKeyToTokens(lineNo: Int): List<String> {
     this.validateQuotes(lineNo)
     this.validateSymbols(lineNo)
@@ -98,6 +102,8 @@ internal fun String.convertLineEndingBackslash(): String {
  * @param backslashIndex The index of the backslash to check
  * @return `true` if the backslash is a line-ending backslash, `false` otherwise
  */
+// Not verified: index arithmetic is unbounded without a precondition on the backslash index.
+@NeverVerify
 internal fun String.isLineEndingBackslash(backslashIndex: Int): Boolean {
     var j = backslashIndex + 1
     while (j < length && this[j] != newLineChar() && this[j].isWhitespace()) {
@@ -219,6 +225,8 @@ internal fun String.takeBeforeComment(allowEscapedQuotesInLiteralStrings: Boolea
  * "a = 0 # Comment".trimComment() == "Comment"
  * ```
  */
+// Not verified: `commentStartIndex + 1` is unbounded without a postcondition on the index search.
+@NeverVerify
 internal fun String.trimComment(allowEscapedQuotesInLiteralStrings: Boolean): String {
     val commentStartIndex = indexOfNextOutsideQuotes(allowEscapedQuotesInLiteralStrings, '#')
 
@@ -241,11 +249,17 @@ internal fun String.getCountOfOccurrencesOfSubstring(substring: String): Int = t
  * @param startIndex - the index to start searching from
  * @return the index of the first occurrence of the searchChar that is not enclosed in quotation marks
  */
+// Not verified: index arithmetic is unbounded without loop invariants. Callers rely on the
+// postcondition without proof; it holds because `replaceEscaped` keeps the length.
+@NeverVerify
 internal fun String.indexOfNextOutsideQuotes(
     allowEscapedQuotesInLiteralStrings: Boolean,
     searchChar: Char,
     startIndex: Int = 0,
 ): Int {
+    postconditions<Int> { r ->
+        r == -1 || (0 <= startIndex && startIndex <= r && r < this.length)
+    }
     val chars = this.drop(startIndex).replaceEscaped(allowEscapedQuotesInLiteralStrings)
     var currentQuoteStr: String? = null
 

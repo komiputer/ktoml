@@ -11,6 +11,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.modules.SerializersModule
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * @param rootNode
@@ -28,6 +29,8 @@ public class TomlArrayOfTablesDecoder(
     private val list = rootNode.children as List<TomlArrayOfTablesElement>
     private lateinit var currentElementDecoder: TomlMainDecoder
 
+    // Not verified: reads the size of a list field it does not own.
+    @NeverVerify
     override fun decodeElementIndex(descriptor: SerialDescriptor): Int {
         if (nextElementIndex == list.size) {
             return CompositeDecoder.DECODE_DONE

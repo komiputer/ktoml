@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
+index e11781a..eb7cf9a 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
+@@ -60,9 +60,6 @@ internal fun integerRepresentationRadix(tag: Int): Int {
+  * and the precondition load-bearing, same as [integerRepresentationRadix].
+  */
+ internal fun integerRepresentationPrefix(tag: Int): String {
+-    preconditions {
+-        0 <= tag && tag <= 4
+-    }
+     postconditions<String> { r ->
+         (tag == 0) implies (r == "0b")
+         (tag == 1) implies (r == "")

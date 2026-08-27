@@ -21,6 +21,7 @@ import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.AbstractEncoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.modules.SerializersModule
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * An abstract Encoder for the TOML format.
@@ -45,6 +46,8 @@ public abstract class TomlAbstractEncoder protected constructor(
     private val localDateDescriptor = LocalDate.serializer().descriptor
     private val localTimeDescriptor = LocalTime.serializer().descriptor
 
+    // Not verified: the element counter has no upper bound, so `++` may overflow.
+    @NeverVerify
     protected open fun nextElementIndex(): Int = ++elementIndex
 
     // Values

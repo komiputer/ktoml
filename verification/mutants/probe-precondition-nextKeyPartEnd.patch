@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+index 776f5ac..04bc7f4 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -50,9 +50,6 @@ internal fun isLineEndingBackslash(s: String, backslashIndex: Int): Boolean {
+  * dot that is outside quotes, or the end of the string.
+  */
+ internal fun nextKeyPartEnd(s: String, startIndex: Int): Int {
+-    preconditions {
+-        0 <= startIndex && startIndex <= s.length
+-    }
+     postconditions<Int> { r ->
+         startIndex <= r && r <= s.length
+         (r < s.length) implies (s[r] == '.')

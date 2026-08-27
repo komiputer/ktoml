@@ -1,0 +1,10 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -21,6 +21,7 @@
+     postconditions<Boolean> { r ->
+         r == (c == ' ' || c == '\t' || c == '\r' || c == '\n')
+     }
++    verify(false)
+     return c == ' ' || c == '\t' || c == '\r' || c == '\n'
+ }
+ 

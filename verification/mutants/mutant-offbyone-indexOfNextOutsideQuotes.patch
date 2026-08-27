@@ -1,0 +1,11 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -223,7 +223,7 @@
+     var quoteChar = ' '
+     var quoteLen = 0
+     var idx = startIndex
+-    while (idx < s.length) {
++    while (idx <= s.length) {
+         loopInvariants {
+             startIndex <= idx && idx <= s.length
+             quoteLen == 0 || quoteLen == 1 || quoteLen == 3

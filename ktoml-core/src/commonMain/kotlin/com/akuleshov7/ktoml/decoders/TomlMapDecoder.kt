@@ -13,6 +13,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.modules.SerializersModule
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * Sometimes, when you do not know the names of the TOML keys and cannot create a proper class with field names for parsing,
@@ -66,6 +67,8 @@ public class TomlMapDecoder private constructor(
         serializersModule = serializersModule,
     )
 
+    // Not verified: indexes the children list with a counter that no invariant bounds.
+    @NeverVerify
     override fun decodeElementIndex(descriptor: SerialDescriptor): Int {
         // stubs are internal technical nodes that are not needed in this scenario
         if (rootNode.children[decodingElementIndex] is TomlStubEmptyNode) {
@@ -134,6 +137,8 @@ public class TomlMapDecoder private constructor(
      * decodingElementIndex had step equals to 1
      * kotlinxIndex has step equals to 2 (because in kotlinx.serialization Maps have x2 index: one for key and one for value)
      */
+    // Not verified: index arithmetic on the children list is unbounded: no invariant ties the indices to it.
+    @NeverVerify
     private fun skipStubs() {
         if (rootNode.children[decodingElementIndex] is TomlStubEmptyNode) {
             ++decodingElementIndex

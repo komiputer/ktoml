@@ -1,0 +1,15 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index d111994..7a4632a 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -170,10 +170,6 @@ internal fun repeatChar(c: Char, n: Int): String {
+  * line continuation. [slashCount] is at most 1073741823 so that its double fits in an `Int`.
+  */
+ internal fun escapeBackslashes(s: String, lastBackslashIndex: Int, slashCount: Int, isMultiline: Boolean): String {
+-    preconditions {
+-        slashCount >= 1 && slashCount <= 1073741823
+-        0 <= lastBackslashIndex && lastBackslashIndex < s.length
+-    }
+     postconditions<String> { r ->
+         r.length == slashCount * 2 || r.length == slashCount * 2 - 1
+         forAll<Int> { (0 <= it && it < r.length) implies (r[it] == '\\') }

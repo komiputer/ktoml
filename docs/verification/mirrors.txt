@@ -1,0 +1,76 @@
+# Mirror manifest for scripts/check-mirrors.sh
+#
+# Each line: <mirror_function> <upstream_file> <upstream_function> <expected_sha256>
+# <upstream_function> is hashed by extracting its full source (signature through closing
+# brace, or through the expression body for expression-bodied functions) from
+# <upstream_file>. When upstream edits that function, the hash here goes stale and
+# check-mirrors.sh fails — revisit the corresponding mirror in
+# ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt.
+#
+# isTomlWhitespace and slice have no single upstream function of their own (the first
+# hand-spells TOML's whitespace set in place of `Char.isWhitespace`; the second spells out
+# `String.substring` for use in postconditions) and so carry no manifest entry.
+
+isLineEndingBackslash ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt isLineEndingBackslash 5989b2b19d054bb0451373481bc4b55aeb0fe792a41532109186c8967f95a6d8
+nextKeyPartEnd ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt splitKeyToTokens 5c8bbd55b3abc94c5d55c468a1d46f72a53189a2f1b83868533ffd6367d6dd17
+countChar ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt validateQuotes de8322a3a89ca2094992da3a1d6e13a64982b378925a210e2a250569725f93c8
+hasBalancedQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt validateQuotes de8322a3a89ca2094992da3a1d6e13a64982b378925a210e2a250569725f93c8
+isLetterOrDigit ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt isLetterOrDigit 543e8641ddd0336f7530bdafbaf1446bb61022318583fa71f752e9e929d53e67
+firstInvalidBareKeyChar ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt validateSymbols ae019707938fe8b9f1f39ea1ee9692dcce4b339df606fd29247ce77fdf44b906
+escapingDisabled ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt replaceEscaped b313a65ee6e74b2af5a6d9dc202664ed8a98fab75ea07f7014efd6c813616a1b
+indexOfNextOutsideQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt indexOfNextOutsideQuotes aa00f11557ffe8a0a3962cebb60c3cc0bd3082f5eee644dd63d38f8ea4b9274d
+takeBeforeComment ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt takeBeforeComment 9ee5bf5ebaf493c3413924d0c1ff9b130ccf2244eab0ed936616e96d531511c8
+hexDigitValue ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt appendEscapedUnicode d88b32da0f67dcc967c825d0092e9e86caa37a7ad0a0c299377766c46f7aa12d
+firstBadEscape ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt convertSpecialCharacters 7a1e2321fe2ced81e45d0c901b82992a00fed801eb9442c4a7ec00756c701462
+
+# Phase 1 chunk 1 (verified/Trims.kt): the trim family. hasPrefix/hasSuffix/lastIndexOfChar/
+# allEqualFrom/trimMultilineQuotesIdempotentOnTrimmed are new helpers with no single upstream
+# original (same treatment as isTomlWhitespace/slice above) and carry no entry.
+#
+# KNOWN LIMITATION (see docs/verification/friction.md, Phase 1 chunk 1 entry): StringUtils.kt
+# declares two functions named `trimMultilineQuotes` (a public no-arg wrapper, and the private
+# one-arg helper this mirror actually reimplements). extract_function() below always matches the
+# *first* `fun ... trimMultilineQuotes(` in the file, i.e. the wrapper, not the private helper.
+# The hash below therefore only guards against the wrapper drifting, not the algorithm itself.
+trimSingleQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimSingleQuotes e50c8869f2cd902206d971b9f1a3b9e9b07b0af75aed57a1a7244439e7a43fc8
+trimQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimQuotes ea5cb2c7e422a8e6a8d66df06b537799002d039d6bf94bbb1128533c32ad02d3
+trimCurlyBraces ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimCurlyBraces 18a157d99e494459b806d6a173b03e022c6a644143cebbecfe7932cc34176ebc
+trimBrackets ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimBrackets f46675a1ea3b1b2007997bf688dcc6c8b913de74efd1b8b20230cbbf1ad53139
+trimDoubleBrackets ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimDoubleBrackets 57d8db7fe08ab08d3deed78bb20798465f7e3e1c179acc470326e4a3dab638bd
+trimSymbols ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimSymbols c780c003408eafd1225d4eea4abd8a86ff154da4d8ede605ccf2ec43482f08c4
+isNotQuoted ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt isNotQuoted b6f699cc52294c9183052be46099fbf464e2b055a5b6a5fd40048c709c6dab46
+trimMultilineQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimMultilineQuotes 87ef96b301002e38ba51b7a5f7d0b46d9886f478ec0a01dac48e842ebf3e2a03
+
+# Phase 1 chunk 2 (verified/Trims.kt): comment/line-continuation family. matchesAt and
+# isKotlinWhitespace are house-rule stdlib primitives (String.regionMatches / Char.isWhitespace)
+# with no single upstream original and carry no entry.
+getCountOfOccurrencesOfSubstring ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt getCountOfOccurrencesOfSubstring 1b482b7ef77efb6d54034b51fbd5d6755b9a54fe914575a0755e3de99f58986c
+startsWithIgnoreAllWhitespaces ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt startsWithIgnoreAllWhitespaces d20517dbe78867d601d1cb81b70ff7e813d8681e9ceff97b10c2029be6db8297
+convertLineEndingBackslash ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt convertLineEndingBackslash 581e85f0586e528718b48f0cc3c7bcd6329eb49e42632bed294a19d57fe02c81
+trimComment ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimComment a8f392d79ce2ea00dbae77ea4ddfa62197772866c9b1aff62cf9c85ae90fe9e4
+
+# Phase 1 chunk 3 (verified/Escapes.kt): the escaping family. hexDigitChar/repeatChar/
+# replaceTwoCharSequence/quoteEscapeSingle/quoteEscapeTriple are new helpers with no single
+# upstream original (same treatment as isTomlWhitespace/slice in Lexing.kt) and carry no entry.
+isControlChar ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt isControlChar b72b00729e11c72d627c9a86941cd13ed01068decd2949e6c7add548cbb0f605
+isMultilineControlChar ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt isMultilineControlChar af52abf05d191d41f0baad35f561227f52bd4872aaa3c00eb76df9ac11dbc8c1
+escapeControlChars ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt escapeControlChars 864f47b2c6256d8d9028fdea768c2453a131b2adb279659e8ebfc13da49021bb
+escapeBackslashes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt escapeBackslashes dc5a40bdf8793af31042aeaae20b4203172641502c2777ecae42620cd3141f6d
+escapeSpecialCharacters ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt escapeSpecialCharacters b0f01bf8a61e240b606ca1a4620c1d0fe2ab0f163e501cc009727eebe790b0a2
+escapeControlChar ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt escapeControlChar 2b4abb2df0b6a3b8689be0588fd8532923ba47c2e262a9e32c6882eaac87047e
+appendEscapedUnicode ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt appendEscapedUnicode d88b32da0f67dcc967c825d0092e9e86caa37a7ad0a0c299377766c46f7aa12d
+replaceEscaped ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt replaceEscaped b313a65ee6e74b2af5a6d9dc202664ed8a98fab75ea07f7014efd6c813616a1b
+
+# Phase 1 chunk 4 (verified/Multiline.kt, verified/IntegerRepr.kt): the multiline triple-quote/
+# nesting family and the IntegerRepresentation dispatch. indexOfCharFrom and allWhitespaceBetween
+# are new helpers with no single upstream original and carry no entry.
+#
+# NO ENTRIES BELOW: extract_function()'s regex (above) anchors on `^(internal |private |public
+# )?fun ` with no leading whitespace, so it only matches top-level declarations. isNextThreeQuotes
+# and hasTwoConsecutiveSymbolsIgnoreWhitespaces are private *methods of the TomlMultilineString
+# class* (4-space-indented `private fun` inside the class body), which the extractor cannot find at
+# all (unlike the trimMultilineQuotes case above, which finds the *wrong* top-level function --
+# this finds none). integerRepresentationRadix/integerRepresentationPrefix mirror
+# IntegerRepresentation's enum-constructor property values, which are not function bodies and have
+# no extractable source form either way. All four are therefore drift-unguarded by
+# check-mirrors.sh; logged in docs/verification/friction.md rather than left unstated.

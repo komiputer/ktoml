@@ -1,0 +1,11 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -342,7 +342,7 @@
+         }
+         i = i + offset
+     }
+-    return -1
++    return 0
+ }
+ 
+ /**

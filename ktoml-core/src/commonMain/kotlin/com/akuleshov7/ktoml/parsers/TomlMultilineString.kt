@@ -5,13 +5,15 @@ import com.akuleshov7.ktoml.exceptions.ParseException
 import com.akuleshov7.ktoml.parsers.enums.MultilineType
 import com.akuleshov7.ktoml.utils.LinesIteratorWrapper
 import com.akuleshov7.ktoml.utils.newLineChar
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * @param config
  * @param linesIteratorWrapper - iterator with the rest of the toml data
  * @param firstLine - first line of multiline value where it was detected
  */
-internal class TomlMultilineString(
+// Not verified: `init` calls members on `this`, so construction has no bound on the size of `lines` for `add`.
+internal class TomlMultilineString @NeverVerify constructor(
     private val config: TomlInputConfig,
     private val linesIteratorWrapper: LinesIteratorWrapper<String>,
     firstLine: String,
@@ -44,8 +46,12 @@ internal class TomlMultilineString(
         lines.joinToString(newLineChar().toString())
     }
 
+    // Not verified: returns a list field it does not own.
+    @NeverVerify
     fun getComments(): List<String> = comments
 
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     private fun parseMultiline() {
         var hasFoundEnd = false
 
@@ -84,6 +90,8 @@ internal class TomlMultilineString(
      * When we have an array with multiline strings, and we're parsing line X
      * we want to know if multiline string was open before line X
      */
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     private fun trackMultilineString(line: String) {
         if (stringTypes.contains(multilineType)) {
             return
@@ -102,6 +110,8 @@ internal class TomlMultilineString(
         }
     }
 
+    // Not verified: string indexing needs a precondition on index that callers do not state.
+    @NeverVerify
     private fun isNextThreeQuotes(
         line: String,
         index: Int,

@@ -1,0 +1,13 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index 59d2f95..8c5bfa4 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -412,7 +412,7 @@ internal fun isKotlinWhitespace(c: Char): Boolean {
+ internal fun startsWithIgnoreAllWhitespaces(s: String, prefix: String): Boolean {
+     var i = 0
+     var j = 0
+-    while (i < s.length && j < prefix.length) {
++    while (i <= s.length && j < prefix.length) {
+         loopInvariants {
+             0 <= i && i <= s.length
+             0 <= j && j <= prefix.length

@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..8fc9397 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -287,6 +287,7 @@ internal fun trimMultilineQuotes(s: String, quotes: String): String {
+                     (s[s.length - quotes.length + it] == quotes[it])
+             })) implies (r == s)
+     }
++    verify(false)
+     if (hasPrefix(s, quotes) && hasSuffix(s, quotes) && quotes.length <= s.length) {
+         val mid = slice(s, quotes.length, s.length)
+         val trimmed = if (hasSuffix(mid, quotes)) slice(mid, 0, mid.length - quotes.length) else mid

@@ -1,0 +1,13 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..1a7a42a 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -65,7 +65,7 @@ internal fun hasSuffix(s: String, suffix: String): Boolean {
+     }
+     val offset = s.length - suffix.length
+     var i = 0
+-    while (i < suffix.length) {
++    while (i <= suffix.length) {
+         loopInvariants {
+             0 <= i && i <= suffix.length
+             forAll<Int> { (0 <= it && it < i) implies (s[offset + it] == suffix[it]) }

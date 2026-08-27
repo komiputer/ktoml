@@ -1,0 +1,10 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -170,6 +170,7 @@
+     preconditions {
+         0 <= startIndex && startIndex <= s.length
+     }
++    verify(false)
+     if (!allowEscapedQuotesInLiteralStrings) {
+         return false
+     }

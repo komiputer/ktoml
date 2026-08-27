@@ -1,0 +1,13 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..bd94c45 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -230,7 +230,7 @@ internal fun trimDoubleBrackets(s: String): String {
+         (!(s.length >= 2 && s[0] == '[' && s[1] == '[' &&
+             s[s.length - 2] == ']' && s[s.length - 1] == ']')) implies (r == s)
+     }
+-    return trimSymbols(s, "[[", "]]")
++    return trimSymbols(s, "[", "]")
+ }
+ 
+ /**

@@ -13,6 +13,7 @@ import kotlin.time.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * Abstracts the specifics of writing TOML files into "emit" operations.
@@ -34,6 +35,8 @@ public abstract class TomlEmitter(config: TomlOutputConfig) {
      *
      * @return The new indent depth.
      */
+    // Not verified: the indent counter has no upper bound, so `++` may overflow.
+    @NeverVerify
     public fun indent(): Int = ++indentDepth
 
     /**
@@ -41,6 +44,8 @@ public abstract class TomlEmitter(config: TomlOutputConfig) {
      *
      * @return The new indent depth.
      */
+    // Not verified: the indent counter has no lower bound, so `--` may overflow.
+    @NeverVerify
     public fun dedent(): Int = --indentDepth
 
     /**

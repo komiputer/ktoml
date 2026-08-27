@@ -12,6 +12,7 @@ import kotlinx.serialization.descriptors.SerialKind
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.modules.EmptySerializersModule
 import kotlinx.serialization.modules.SerializersModule
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * Encodes a TOML file or table.
@@ -64,6 +65,8 @@ public class TomlMainEncoder(
         super.appendValue(value)
     }
 
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     override fun encodeStructure(kind: SerialKind): TomlAbstractEncoder = when {
         kind == StructureKind.LIST -> TomlArrayEncoder(
             rootNode,

@@ -13,6 +13,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.SerialKind
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.modules.SerializersModule
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * Encodes a TOML array or table array.
@@ -89,6 +90,8 @@ public class TomlArrayEncoder internal constructor(
         super.appendValue(value)
     }
 
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     override fun encodeStructure(kind: SerialKind): TomlAbstractEncoder = if (attributes.isInline) {
         when (kind) {
             StructureKind.LIST,
@@ -153,6 +156,8 @@ public class TomlArrayEncoder internal constructor(
         super.endStructure(descriptor)
     }
 
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     private fun collapseSingleChildRoot() {
         var isSynthetic = false
 

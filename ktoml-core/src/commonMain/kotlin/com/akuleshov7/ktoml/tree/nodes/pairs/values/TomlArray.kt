@@ -7,6 +7,7 @@ import com.akuleshov7.ktoml.parsers.removeTrailingComma
 import com.akuleshov7.ktoml.parsers.trimBrackets
 import com.akuleshov7.ktoml.tree.nodes.parseValue
 import com.akuleshov7.ktoml.writers.TomlEmitter
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * Toml AST Node for a representation of arrays: key = [value1, value2, value3]
@@ -26,6 +27,8 @@ public class TomlArray internal constructor(
     @Suppress("UNCHECKED_CAST")
     public fun parse(config: TomlInputConfig = TomlInputConfig()): List<Any> = content as List<Any>
 
+    // Not verified: reading `lastIndex` moves the mapped list, so the plugin rejects the iteration after it.
+    @NeverVerify
     @Suppress("UNCHECKED_CAST")
     public override fun write(
         emitter: TomlEmitter,
@@ -95,6 +98,8 @@ public class TomlArray internal constructor(
         /**
          * method for splitting the string to the array: "[[a, b], [c], [d]]" to -> [a,b] [c] [d]
          */
+        // Not verified: string indexing and bracket counting are unbounded without loop invariants.
+        @NeverVerify
         @Suppress("NESTED_BLOCK", "TOO_LONG_FUNCTION")
         private fun String.parseArray(lineNo: Int): MutableList<String> {
             val trimmed = trimBrackets().trim().removeTrailingComma()

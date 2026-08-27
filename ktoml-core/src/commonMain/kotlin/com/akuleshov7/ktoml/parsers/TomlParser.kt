@@ -7,6 +7,7 @@ import com.akuleshov7.ktoml.tree.nodes.*
 import com.akuleshov7.ktoml.utils.LinesIteratorWrapper
 import com.akuleshov7.ktoml.utils.newLineChar
 import kotlin.jvm.JvmInline
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * @param config - object that stores configuration options for a parser
@@ -208,6 +209,8 @@ public value class TomlParser(private val config: TomlInputConfig) {
         }
     }
 
+    // Not verified: returns its receiver list, which it does not own.
+    @NeverVerify
     private fun MutableList<String>.trimEmptyTrailingLines(): MutableList<String> {
         if (this.isEmpty()) {
             return this

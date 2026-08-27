@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index 3d2c388..e43fbd5 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -308,6 +308,7 @@ internal fun matchesAt(s: String, i: Int, sub: String): Boolean {
+         r == (sub.length <= s.length - i &&
+             forAll<Int> { (0 <= it && it < sub.length) implies (s[i + it] == sub[it]) })
+     }
++    verify(false)
+     if (sub.length > s.length - i) {
+         return false
+     }

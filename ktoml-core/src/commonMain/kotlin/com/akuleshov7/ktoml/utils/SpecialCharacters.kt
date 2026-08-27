@@ -11,6 +11,7 @@ package com.akuleshov7.ktoml.utils
 
 import com.akuleshov7.ktoml.exceptions.UnknownEscapeSymbolsException
 import com.akuleshov7.ktoml.parsers.isLineEndingBackslash
+import org.jetbrains.kotlin.formver.plugin.*
 
 internal const val COMPLEX_UNICODE_LENGTH = 8
 internal const val COMPLEX_UNICODE_PREFIX = 'U'
@@ -19,6 +20,7 @@ internal const val OCT_RADIX = 8
 internal const val HEX_RADIX = 16
 internal const val SIMPLE_UNICODE_LENGTH = 4
 internal const val SIMPLE_UNICODE_PREFIX = 'u'
+internal const val UNICODE_MAX_CODE_POINT = 0x10FFFF
 
 /**
  * Converting special escaped symbols like newlines, tabs and unicode symbols to proper characters for decoding
@@ -29,9 +31,22 @@ internal const val SIMPLE_UNICODE_PREFIX = 'u'
  * @throws UnknownEscapeSymbolsException
  */
 public fun String.convertSpecialCharacters(lineNo: Int): String {
-    val resultString = StringBuilder()
+    postconditions<String> { r ->
+        forAll<Int> { k ->
+            (0 <= k && k < this@convertSpecialCharacters.length) implies (this@convertSpecialCharacters[k] != '\\')
+        } implies (r == this@convertSpecialCharacters)
+    }
+    val resultString: @Unique StringBuilder = StringBuilder()
     var i = 0
     while (i < length) {
+        loopInvariants {
+            0 <= i && i <= this@convertSpecialCharacters.length
+            forAll<Int> { k ->
+                (0 <= k && k < this@convertSpecialCharacters.length) implies (this@convertSpecialCharacters[k] != '\\')
+            } implies (resultString.length == i && forAll<Int> { k ->
+                (0 <= k && k < i) implies (resultString.toString()[k] == this@convertSpecialCharacters[k])
+            })
+        }
         val currentChar = get(i)
         var offset = 1
         if (currentChar == '\\' && i != lastIndex) {
@@ -71,28 +86,34 @@ public fun String.convertSpecialCharacters(lineNo: Int): String {
  * @throws ParseException
  * @throws UnknownEscapeSymbolsException
  */
-public fun StringBuilder.appendEscapedUnicode(
+public fun @Unique @Borrowed StringBuilder.appendEscapedUnicode(
     fullString: String,
     marker: Char,
     codeStartIndex: Int,
     lineNo: Int
 ): Int {
+    preconditions { 1 <= codeStartIndex && codeStartIndex <= fullString.length }
+    postconditions<Int> { r ->
+        r == SIMPLE_UNICODE_LENGTH || r == COMPLEX_UNICODE_LENGTH
+        r <= fullString.length - codeStartIndex
+    }
     val nbUnicodeChars = if (marker == SIMPLE_UNICODE_PREFIX) {
         SIMPLE_UNICODE_LENGTH
     } else {
         COMPLEX_UNICODE_LENGTH
     }
-    if (codeStartIndex + nbUnicodeChars > fullString.length) {
+    if (nbUnicodeChars > fullString.length - codeStartIndex) {
         val invalid = fullString.substring(codeStartIndex - 1)
         throw UnknownEscapeSymbolsException("\\$invalid", lineNo)
     }
     val hexCode = fullString.substring(codeStartIndex, codeStartIndex + nbUnicodeChars)
     val codePoint = hexCode.toInt(HEX_RADIX)
-    try {
-        appendCodePointCompat(codePoint)
-    } catch (e: IllegalArgumentException) {
+    // Checked here rather than by catching what appendCodePointCompat throws: formver rejects `try`
+    // in a function that owns its receiver.
+    if (codePoint < 0 || codePoint > UNICODE_MAX_CODE_POINT) {
         throw UnknownEscapeSymbolsException("\\$marker$hexCode", lineNo)
     }
+    appendCodePointCompat(codePoint)
     return nbUnicodeChars
 }
 
@@ -175,6 +196,11 @@ private fun String.escapeBackslashes(
     slashCount: Int,
     isMultiline: Boolean,
 ): String {
+    preconditions { slashCount > 0 && slashCount <= 1073741823 }
+    postconditions<String> { r ->
+        r.length == slashCount * 2 || r.length == slashCount * 2 - 1
+        (!isMultiline || slashCount % 2 == 0) implies (r.length == slashCount * 2)
+    }
     val isLineEndingBackslash = slashCount % 2 != 0 &&
             isMultiline &&
             isLineEndingBackslash(lastBackslashIndex)

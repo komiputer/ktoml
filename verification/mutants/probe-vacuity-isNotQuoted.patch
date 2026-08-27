@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..cf8a46e 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -248,6 +248,7 @@ internal fun isNotQuoted(s: String): Boolean {
+         r == !(s.length >= 1 && s[0] == '"' && s[s.length - 1] == '"')
+         (s.length == 1 && s[0] == '"') implies !r
+     }
++    verify(false)
+     return !(hasPrefix(s, "\"") && hasSuffix(s, "\""))
+ }
+ 

@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index 3d2c388..f7659d8 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -340,9 +340,6 @@ internal fun matchesAt(s: String, i: Int, sub: String): Boolean {
+  * r >= 1`), which is the sentinel-adjacent case a mutant is most likely to break.
+  */
+ internal fun getCountOfOccurrencesOfSubstring(s: String, substring: String): Int {
+-    preconditions {
+-        substring.length >= 1
+-    }
+     postconditions<Int> { r ->
+         r >= 0
+         r.toLong() * substring.length <= s.length

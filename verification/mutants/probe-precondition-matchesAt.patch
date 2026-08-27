@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index 3d2c388..9f0913d 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -301,9 +301,6 @@ internal fun trimMultilineQuotes(s: String, quotes: String): String {
+  * [getCountOfOccurrencesOfSubstring]; same shape as [hasPrefix] but at an arbitrary offset.
+  */
+ internal fun matchesAt(s: String, i: Int, sub: String): Boolean {
+-    preconditions {
+-        0 <= i && i <= s.length
+-    }
+     postconditions<Boolean> { r ->
+         r == (sub.length <= s.length - i &&
+             forAll<Int> { (0 <= it && it < sub.length) implies (s[i + it] == sub[it]) })

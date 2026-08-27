@@ -1,0 +1,11 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -36,7 +36,7 @@
+         0 <= backslashIndex && backslashIndex < s.length
+     }
+     var j = backslashIndex + 1
+-    while (j < s.length && s[j] != '\n' && isTomlWhitespace(s[j])) {
++    while (j <= s.length && s[j] != '\n' && isTomlWhitespace(s[j])) {
+         loopInvariants {
+             backslashIndex + 1 <= j && j <= s.length
+         }

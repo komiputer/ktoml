@@ -12,6 +12,7 @@ import com.akuleshov7.ktoml.utils.isControlChar
 import com.akuleshov7.ktoml.utils.isMultilineControlChar
 import com.akuleshov7.ktoml.utils.newLineChar
 import com.akuleshov7.ktoml.writers.TomlEmitter
+import org.jetbrains.kotlin.formver.plugin.*
 
 /**
  * Toml AST Node for a representation of literal string values: key = 'value' (with single quotes and no escaped symbols)
@@ -124,7 +125,8 @@ public class TomlLiteralString internal constructor(
             }
 
         private fun String.checkCountOfOtherQuotes(lineNo: Int): String {
-            if (this.replace("\\'", " ").getCountOfOccurrencesOfSubstring("'''") != 0) {
+            postconditions<String> { r -> r == this@checkCountOfOtherQuotes }
+            if (this.replace("\\'", " ", ignoreCase = false).getCountOfOccurrencesOfSubstring("'''") != 0) {
                 throw ParseException(
                     "Multi-line literal basic string cannot contain 3 or more quotes (') in a row." +
                             " Please remove the quotes or set allowEscapedQuotesInLiteral " +

@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..0bb1b4e 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -33,6 +33,7 @@ internal fun isControlChar(c: Char): Boolean {
+     postconditions<Boolean> { r ->
+         r == ((c <= '\u001f' || c == '\u007f') && c != '\t')
+     }
++    verify(false)
+     return (c <= '\u001f' || c == '\u007f') && c != '\t'
+ }
+ 

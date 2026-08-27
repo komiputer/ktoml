@@ -1,0 +1,10 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -88,6 +88,7 @@
+     postconditions<Int> { n ->
+         0 <= n && n <= s.length
+     }
++    verify(false)
+     var n = 0
+     var i = 0
+     while (i < s.length) {

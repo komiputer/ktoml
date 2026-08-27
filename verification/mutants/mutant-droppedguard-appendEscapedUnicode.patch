@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index d111994..3e466c8 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -380,9 +380,6 @@ internal fun appendEscapedUnicode(fullString: String, marker: Char, codeStartInd
+             })
+     }
+     val nbUnicodeChars = if (marker == 'u') 4 else 8
+-    if (nbUnicodeChars > fullString.length - codeStartIndex) {
+-        return -1
+-    }
+     var k = 0
+     while (k < nbUnicodeChars) {
+         loopInvariants {

@@ -14,6 +14,7 @@ import com.akuleshov7.ktoml.tree.nodes.pairs.keys.TomlKey
 import com.akuleshov7.ktoml.writers.TomlEmitter
 import com.akuleshov7.ktoml.writers.TomlStringEmitter
 import kotlin.jvm.JvmStatic
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * Class to represent all types of tables: primitive/arrays/etc.
@@ -98,6 +99,8 @@ public class TomlTable(
         endTableHeader(type)
     }
 
+    // Not verified: list indexing needs bounds that no precondition states.
+    @NeverVerify
     private fun TomlEmitter.writeArrayChild(
         index: Int,
         child: TomlNode,

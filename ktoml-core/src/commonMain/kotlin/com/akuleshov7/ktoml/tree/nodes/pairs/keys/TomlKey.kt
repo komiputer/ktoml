@@ -6,6 +6,7 @@ import com.akuleshov7.ktoml.parsers.parseKeyName
 import com.akuleshov7.ktoml.parsers.splitKeyToTokens
 import com.akuleshov7.ktoml.writers.TomlEmitter
 import com.akuleshov7.ktoml.writers.TomlStringEmitter
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * Class that represents a toml key-value pair.
@@ -34,6 +35,8 @@ public class TomlKey internal constructor(
      * Gets the last key part in AST form, with quotes removed and escapes resolved
      * for basic keys.
      */
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     public fun last(): String = keyParts.last().parseKeyName(lineNo = 0)
 
     public fun write(emitter: TomlEmitter) {

@@ -8,6 +8,7 @@ import com.akuleshov7.ktoml.parsers.takeBeforeComment
 import com.akuleshov7.ktoml.tree.nodes.pairs.keys.TomlKey
 import com.akuleshov7.ktoml.tree.nodes.pairs.values.*
 import com.akuleshov7.ktoml.writers.TomlEmitter
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 private typealias ValueCreator = (String, Int) -> TomlValue
 
@@ -31,6 +32,8 @@ internal interface TomlKeyValue {
      * @param parentNode
      * @return the table that is parsed from a dotted key
      */
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     fun createTomlTableFromDottedKey(parentNode: TomlNode): TomlTable {
         // for a key: a.b.c it will be [a, b]
         val syntheticTablePrefix = this.key.keyParts.dropLast(1)
@@ -87,6 +90,8 @@ public fun String.parseList(lineNo: Int, config: TomlInputConfig): TomlArray = T
  * @return a resulted key-value pair
  * @throws ParseException
  */
+// Not verified: `firstEqualsSign + 1` is unbounded without a postcondition on the index search.
+@NeverVerify
 public fun String.splitKeyValue(lineNo: Int, config: TomlInputConfig = TomlInputConfig()): Pair<String, String> {
     val pair = takeBeforeComment(config.allowEscapedQuotesInLiteralStrings)
 

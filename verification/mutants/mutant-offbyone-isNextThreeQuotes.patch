@@ -1,0 +1,13 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+index 35f53bf..bbbb5d8 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+@@ -25,7 +25,7 @@ import org.jetbrains.kotlin.formver.plugin.*
+ @Pure
+ internal fun isNextThreeQuotes(line: String, index: Int, quote: Char): Boolean {
+     preconditions {
+-        0 <= index && index < line.length - 2
++        0 <= index && index <= line.length - 2
+     }
+     postconditions<Boolean> { r ->
+         r == (line[index] == quote && line[index + 1] == quote && line[index + 2] == quote)

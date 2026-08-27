@@ -1,0 +1,13 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+index 46fd0ef..88ca5ac 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+@@ -112,7 +112,7 @@ internal fun hasTwoConsecutiveSymbolsIgnoreWhitespaces(value: String, searchSymb
+  */
+ internal fun allWhitespaceBetween(s: String, from: Int, to: Int): Boolean {
+     preconditions {
+-        0 <= from && from <= to && to <= s.length
++        0 <= from && from <= to
+     }
+     postconditions<Boolean> { r ->
+         r == forAll<Int> { (from <= it && it < to) implies isKotlinWhitespace(s[it]) }

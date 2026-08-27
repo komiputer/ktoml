@@ -13,6 +13,7 @@ import kotlinx.serialization.descriptors.SerialKind
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.encoding.CompositeEncoder
 import kotlinx.serialization.modules.SerializersModule
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 // Todo: Support "flat keys", i.e. a = { b.c = "..." }
 
@@ -135,6 +136,8 @@ public class TomlInlineTableEncoder internal constructor(
         super.endStructure(descriptor)
     }
 
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     private fun collapseLast(child: TomlNode) {
         val target = pairs.removeLast()
         val name = "${target.name}.${child.name}"

@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+index 776f5ac..28a2cd4 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -30,9 +30,6 @@ internal fun isTomlWhitespace(c: Char): Boolean {
+  * end of the string.
+  */
+ internal fun isLineEndingBackslash(s: String, backslashIndex: Int): Boolean {
+-    preconditions {
+-        0 <= backslashIndex && backslashIndex < s.length
+-    }
+     var j = backslashIndex + 1
+     while (j < s.length && s[j] != '\n' && isTomlWhitespace(s[j])) {
+         loopInvariants {

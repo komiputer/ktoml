@@ -7,6 +7,7 @@ import com.akuleshov7.ktoml.parsers.*
 import com.akuleshov7.ktoml.tree.nodes.pairs.keys.TomlKey
 import com.akuleshov7.ktoml.tree.nodes.tables.InlineTableType
 import com.akuleshov7.ktoml.writers.TomlEmitter
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 /**
  * Class for parsing and representing of inline tables: inline = { a = 5, b = 6 , c = 7 }
@@ -158,6 +159,8 @@ public class TomlInlineTable internal constructor(
         }
     }
 
+    // Not verified: calls list operations on collections it does not own.
+    @NeverVerify
     private fun createTableRoot(currentParentalNode: TomlNode): TomlTable = TomlTable(
         TomlKey(
             when (currentParentalNode) {
@@ -236,6 +239,8 @@ public class TomlInlineTable internal constructor(
          *  table elements. Splitting happens only on top-level commas: commas nested
          *  inside tables { }, arrays [ ] or quotes " "/' ' are kept as part of the element.
          */
+        // Not verified: bracket counting and `add` in a loop are unbounded without loop invariants.
+        @NeverVerify
         @Suppress("TOO_LONG_FUNCTION")
         private fun String.splitInlineArrayOfTables(): List<String> {
             val clearedString = this
@@ -290,6 +295,8 @@ public class TomlInlineTable internal constructor(
          * nested tables { } and quotes " "/' '. The bracket depth is tracked so that inline
          * tables nested to any depth are split correctly (see issues #29 and #360).
          */
+        // Not verified: bracket counting and `add` in a loop are unbounded without loop invariants.
+        @NeverVerify
         @Suppress("TOO_LONG_FUNCTION")
         private fun String.splitInlineTableToKeyValue(
             allowEscapedQuotesInLiteralStrings: Boolean,

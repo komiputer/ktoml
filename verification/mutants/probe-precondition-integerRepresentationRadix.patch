@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
+index e11781a..06caec9 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
+@@ -29,9 +29,6 @@ import org.jetbrains.kotlin.formver.plugin.*
+  */
+ @Pure
+ internal fun integerRepresentationRadix(tag: Int): Int {
+-    preconditions {
+-        0 <= tag && tag <= 4
+-    }
+     postconditions<Int> { r ->
+         (tag == 0) implies (r == 2)
+         (tag == 1) implies (r == 10)

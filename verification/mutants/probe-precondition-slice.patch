@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+index 776f5ac..5613d6a 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -340,9 +340,6 @@ internal fun firstBadEscape(s: String): Int {
+  * spelled out. Same shape as the `subs` helper in SnaKt's own string algorithm tests.
+  */
+ internal fun slice(s: String, lo: Int, hi: Int): String {
+-    preconditions {
+-        0 <= lo && lo <= hi && hi <= s.length
+-    }
+     postconditions<String> { res ->
+         res.length == hi - lo
+         forAll<Int> {
