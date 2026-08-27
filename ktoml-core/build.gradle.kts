@@ -112,6 +112,21 @@ tasks.withType<KotlinJvmTest> {
     useJUnitPlatform()
 }
 
+// The pinned formver build reports verification failures (VIPER_TEXT) at Severity.INFO, not ERROR,
+// so they never fail compileKotlinJvm on their own; upstream's severity-config DSL (PR #227) isn't
+// in this pin. Scan the compiler's own log for a Viper verification error and fail here instead.
+tasks.named("compileKotlinJvm") {
+    val failureMarker = "Viper verification error"
+    var sawFailure = false
+    logging.addStandardOutputListener { message -> if (failureMarker in message) sawFailure = true }
+    logging.addStandardErrorListener { message -> if (failureMarker in message) sawFailure = true }
+    doLast {
+        if (sawFailure) {
+            throw GradleException("formver reported a Viper verification error (see log above)")
+        }
+    }
+}
+
 // it is too time-consuming to support those tests
 tasks.withType<KotlinJsTest> {
     if (this.name.contains("jsBrowserTest") ||
