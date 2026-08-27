@@ -18,6 +18,14 @@ import org.gradle.kotlin.dsl.configure
  *
  */
 fun Project.configureVersioning() {
+    // reckon's grgit/JGit backing fails to open a linked git worktree (`.git` is a file, not a
+    // directory) and misreports it as bare; fall back to a fixed version there instead of failing
+    // configuration, since release builds always run from a plain checkout.
+    if (rootProject.file(".git").isFile) {
+        version = "0.0.0-verified-SNAPSHOT"
+        return
+    }
+
     apply<ReckonPlugin>()
 
     val isSnapshot = hasProperty("reckon.stage") && property("reckon.stage") == "snapshot"
