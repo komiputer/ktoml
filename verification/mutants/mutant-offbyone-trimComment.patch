@@ -1,0 +1,13 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index 5ca0dac..bc4ea4e 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -543,7 +543,7 @@ internal fun trimComment(s: String, allowEscapedQuotesInLiteralStrings: Boolean)
+         lo = lo + 1
+     }
+     var hi = s.length
+-    while (hi > lo && isAsciiWhitespace(s[hi - 1])) {
++    while (hi >= lo && isAsciiWhitespace(s[hi - 1])) {
+         loopInvariants {
+             lo <= hi && hi <= s.length
+         }

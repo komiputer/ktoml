@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index 5ca0dac..6b3f1be 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -458,6 +458,7 @@ internal fun convertLineEndingBackslash(s: String): String {
+             (0 <= it && it < s.length - 1) implies !(s[it] == '\\' && s[it + 1] == '\n')
+         }) implies (r == s)
+     }
++    verify(false)
+     var hasMarker = false
+     var markerIdx = 0
+     var i = 0

@@ -1,0 +1,15 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index 5ca0dac..e19492e 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -454,9 +454,7 @@ internal fun startsWithIgnoreAllWhitespaces(s: String, prefix: String): Boolean
+ internal fun convertLineEndingBackslash(s: String): String {
+     postconditions<String> { r ->
+         r.length <= s.length
+-        (forAll<Int> {
+-            (0 <= it && it < s.length - 1) implies !(s[it] == '\\' && s[it + 1] == '\n')
+-        }) implies (r == s)
++        r == s
+     }
+     var hasMarker = false
+     var markerIdx = 0
