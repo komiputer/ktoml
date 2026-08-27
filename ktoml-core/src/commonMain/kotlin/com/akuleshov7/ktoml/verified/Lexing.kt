@@ -276,6 +276,7 @@ internal fun indexOfNextOutsideQuotes(
 internal fun hexDigitValue(c: Char): Int {
     postconditions<Int> { v ->
         -1 <= v && v <= 15
+        (v == -1) == !(('0' <= c && c <= '9') || ('a' <= c && c <= 'f') || ('A' <= c && c <= 'F'))
     }
     if ('0' <= c && c <= '9') {
         return c - '0'

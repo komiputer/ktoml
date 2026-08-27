@@ -1,0 +1,10 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -60,6 +60,7 @@
+         startIndex <= r && r <= s.length
+         (r < s.length) implies (s[r] == '.')
+     }
++    verify(false)
+     var singleQuoteIsClosed = true
+     var doubleQuoteIsClosed = true
+     var i = startIndex

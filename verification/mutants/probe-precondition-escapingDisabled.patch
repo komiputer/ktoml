@@ -1,0 +1,12 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -167,9 +167,6 @@
+  */
+ @AlwaysVerify
+ internal fun escapingDisabled(s: String, startIndex: Int, allowEscapedQuotesInLiteralStrings: Boolean): Boolean {
+-    preconditions {
+-        0 <= startIndex && startIndex <= s.length
+-    }
+     if (!allowEscapedQuotesInLiteralStrings) {
+         return false
+     }

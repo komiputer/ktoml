@@ -1,0 +1,10 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -303,6 +303,7 @@
+         r == -1 || (0 <= r && r < s.length)
+         (r != -1) implies (s[r] == '\\')
+     }
++    verify(false)
+     var i = 0
+     while (i < s.length) {
+         loopInvariants {

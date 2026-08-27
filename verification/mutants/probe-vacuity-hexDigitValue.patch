@@ -1,0 +1,10 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -278,6 +278,7 @@
+         -1 <= v && v <= 15
+         (v == -1) == !(('0' <= c && c <= '9') || ('a' <= c && c <= 'f') || ('A' <= c && c <= 'F'))
+     }
++    verify(false)
+     if ('0' <= c && c <= '9') {
+         return c - '0'
+     }

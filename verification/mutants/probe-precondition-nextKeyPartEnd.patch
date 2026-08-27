@@ -1,0 +1,12 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -53,9 +53,6 @@
+  */
+ @AlwaysVerify
+ internal fun nextKeyPartEnd(s: String, startIndex: Int): Int {
+-    preconditions {
+-        0 <= startIndex && startIndex <= s.length
+-    }
+     postconditions<Int> { r ->
+         startIndex <= r && r <= s.length
+         (r < s.length) implies (s[r] == '.')

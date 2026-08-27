@@ -1,0 +1,10 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -217,6 +217,7 @@
+             (startIndex <= it && it < s.length) implies (s[it] != searchChar)
+         }
+     }
++    verify(false)
+     val escapesCollapse = !escapingDisabled(s, startIndex, allowEscapedQuotesInLiteralStrings)
+     // ktoml tracks the open delimiter as a nullable String; the pair below is the same
+     // state with no allocation: quoteLen == 0 means outside quotes.
