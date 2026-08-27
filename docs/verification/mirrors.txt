@@ -22,3 +22,21 @@ indexOfNextOutsideQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/p
 takeBeforeComment ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt takeBeforeComment 9ee5bf5ebaf493c3413924d0c1ff9b130ccf2244eab0ed936616e96d531511c8
 hexDigitValue ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt appendEscapedUnicode baf4ed9bea63dbc3e5a023d030b9d3356dec31adeb4aa5524012a45f3c9d23df
 firstBadEscape ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt convertSpecialCharacters fc25a2f85ec0de0ee4da1893a9bac10b226efe230f3a778ec6f51c8684ac1b2f
+
+# Phase 1 chunk 1 (verified/Trims.kt): the trim family. hasPrefix/hasSuffix/lastIndexOfChar/
+# allEqualFrom/trimMultilineQuotesIdempotentOnTrimmed are new helpers with no single upstream
+# original (same treatment as isTomlWhitespace/slice above) and carry no entry.
+#
+# KNOWN LIMITATION (see docs/verification/friction.md, Phase 1 chunk 1 entry): StringUtils.kt
+# declares two functions named `trimMultilineQuotes` (a public no-arg wrapper, and the private
+# one-arg helper this mirror actually reimplements). extract_function() below always matches the
+# *first* `fun ... trimMultilineQuotes(` in the file, i.e. the wrapper, not the private helper.
+# The hash below therefore only guards against the wrapper drifting, not the algorithm itself.
+trimSingleQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimSingleQuotes e50c8869f2cd902206d971b9f1a3b9e9b07b0af75aed57a1a7244439e7a43fc8
+trimQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimQuotes ea5cb2c7e422a8e6a8d66df06b537799002d039d6bf94bbb1128533c32ad02d3
+trimCurlyBraces ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimCurlyBraces 18a157d99e494459b806d6a173b03e022c6a644143cebbecfe7932cc34176ebc
+trimBrackets ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimBrackets f46675a1ea3b1b2007997bf688dcc6c8b913de74efd1b8b20230cbbf1ad53139
+trimDoubleBrackets ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimDoubleBrackets 57d8db7fe08ab08d3deed78bb20798465f7e3e1c179acc470326e4a3dab638bd
+trimSymbols ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimSymbols c780c003408eafd1225d4eea4abd8a86ff154da4d8ede605ccf2ec43482f08c4
+isNotQuoted ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt isNotQuoted b6f699cc52294c9183052be46099fbf464e2b055a5b6a5fd40048c709c6dab46
+trimMultilineQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimMultilineQuotes 87ef96b301002e38ba51b7a5f7d0b46d9886f478ec0a01dac48e842ebf3e2a03
