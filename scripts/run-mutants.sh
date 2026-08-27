@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Phase 0 negative-control gate (docs/verification/plan.md §"Phase 0"/§3).
+# Negative-control gate (docs/verification/plan.md §"Phase 0"/§3), covering every file under
+# ktoml-core's verified/ source set (Lexing.kt, Trims.kt, ...).
 #
 # Applies each patch in verification/mutants/ to the verified/ kernel one at a time,
 # runs verification (:ktoml-core:compileKotlinJvm, which fails the build on a Viper
@@ -11,12 +12,12 @@ set -uo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 mutants_dir="$repo_root/verification/mutants"
-target_file="$repo_root/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt"
+verified_dir="$repo_root/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified"
 
 cd "$repo_root"
 
-if [[ -n "$(git status --porcelain -- "$target_file")" ]]; then
-    echo "run-mutants.sh: $target_file has uncommitted changes; refusing to run (would revert your work)." >&2
+if [[ -n "$(git status --porcelain -- "$verified_dir")" ]]; then
+    echo "run-mutants.sh: $verified_dir has uncommitted changes; refusing to run (would revert your work)." >&2
     exit 2
 fi
 
@@ -40,7 +41,7 @@ for patch in "$mutants_dir"/*.patch; do
         echo "  rejected, as expected"
     fi
 
-    git checkout -- "$target_file"
+    git checkout -- "$verified_dir"
 done
 
 echo

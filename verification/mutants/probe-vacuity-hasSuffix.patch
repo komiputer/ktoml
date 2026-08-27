@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..9bd882f 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -60,6 +60,7 @@ internal fun hasSuffix(s: String, suffix: String): Boolean {
+                     (s[s.length - suffix.length + it] == suffix[it])
+             })
+     }
++    verify(false)
+     if (suffix.length > s.length) {
+         return false
+     }

@@ -1,0 +1,13 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..e3bc755 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -35,7 +35,7 @@ internal fun hasPrefix(s: String, prefix: String): Boolean {
+         return false
+     }
+     var i = 0
+-    while (i < prefix.length) {
++    while (i <= prefix.length) {
+         loopInvariants {
+             0 <= i && i <= prefix.length
+             forAll<Int> { (0 <= it && it < i) implies (s[it] == prefix[it]) }

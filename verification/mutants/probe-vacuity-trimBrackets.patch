@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..74abec6 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -216,6 +216,7 @@ internal fun trimBrackets(s: String): String {
+                 forAll<Int> { (0 <= it && it < r.length) implies (r[it] == s[it + 1]) })
+         (!(s.length >= 1 && s[0] == '[' && s[s.length - 1] == ']')) implies (r == s)
+     }
++    verify(false)
+     return trimSymbols(s, "[", "]")
+ }
+ 
