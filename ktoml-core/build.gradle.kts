@@ -13,10 +13,6 @@ plugins {
     id("org.jetbrains.kotlin.formver") version "0.1.0-SNAPSHOT"
 }
 
-formver {
-    errorStyle("error")
-}
-
 kotlin {
     explicitApi()
 
