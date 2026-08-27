@@ -14,6 +14,7 @@ configureVersioning()
 allprojects {
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 
     apply<DiktatGradlePlugin>()
