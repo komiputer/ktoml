@@ -40,3 +40,11 @@ trimDoubleBrackets ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers
 trimSymbols ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimSymbols c780c003408eafd1225d4eea4abd8a86ff154da4d8ede605ccf2ec43482f08c4
 isNotQuoted ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt isNotQuoted b6f699cc52294c9183052be46099fbf464e2b055a5b6a5fd40048c709c6dab46
 trimMultilineQuotes ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimMultilineQuotes 87ef96b301002e38ba51b7a5f7d0b46d9886f478ec0a01dac48e842ebf3e2a03
+
+# Phase 1 chunk 2 (verified/Trims.kt): comment/line-continuation family. matchesAt and
+# isAsciiWhitespace are house-rule stdlib primitives (String.regionMatches / Char.isWhitespace)
+# with no single upstream original and carry no entry.
+getCountOfOccurrencesOfSubstring ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt getCountOfOccurrencesOfSubstring 4036cd4dfeb48df3e92d29e77182d46e38224a741817ac4e0cea40d15907902f
+startsWithIgnoreAllWhitespaces ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt startsWithIgnoreAllWhitespaces d20517dbe78867d601d1cb81b70ff7e813d8681e9ceff97b10c2029be6db8297
+convertLineEndingBackslash ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt convertLineEndingBackslash 581e85f0586e528718b48f0cc3c7bcd6329eb49e42632bed294a19d57fe02c81
+trimComment ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt trimComment a8f392d79ce2ea00dbae77ea4ddfa62197772866c9b1aff62cf9c85ae90fe9e4
