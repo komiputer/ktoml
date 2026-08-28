@@ -392,8 +392,14 @@ internal fun getCountOfOccurrencesOfSubstring(s: String, substring: String): Int
  * predicate only covers the six ASCII whitespace characters, so [startsWithIgnoreAllWhitespaces]
  * below is proved against a narrower whitespace set than upstream actually uses. Flagged here
  * rather than silently assumed equivalent.
+ *
+ * `@Pure` (added in Phase 1 chunk 4): the body is branch-free, so this is legal per the
+ * `@Pure`-requires-expression-body rule (plan.md friction, chunk 1) -- needed so
+ * `verified/Multiline.kt`'s `allWhitespaceBetween` can call it from inside a `forAll` in its own
+ * `postconditions`/`loopInvariants` blocks.
  */
 @AlwaysVerify
+@Pure
 internal fun isAsciiWhitespace(c: Char): Boolean {
     postconditions<Boolean> { r ->
         r == (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\u000B' || c == '\u000C')

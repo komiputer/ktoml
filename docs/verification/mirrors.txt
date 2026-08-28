@@ -60,3 +60,17 @@ escapeSpecialCharacters ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/ut
 escapeControlChar ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt escapeControlChar 2b4abb2df0b6a3b8689be0588fd8532923ba47c2e262a9e32c6882eaac87047e
 appendEscapedUnicode ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/utils/SpecialCharacters.kt appendEscapedUnicode baf4ed9bea63dbc3e5a023d030b9d3356dec31adeb4aa5524012a45f3c9d23df
 replaceEscaped ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/parsers/StringUtils.kt replaceEscaped b313a65ee6e74b2af5a6d9dc202664ed8a98fab75ea07f7014efd6c813616a1b
+
+# Phase 1 chunk 4 (verified/Multiline.kt, verified/IntegerRepr.kt): the multiline triple-quote/
+# nesting family and the IntegerRepresentation dispatch. indexOfCharFrom and allWhitespaceBetween
+# are new helpers with no single upstream original and carry no entry.
+#
+# NO ENTRIES BELOW: extract_function()'s regex (above) anchors on `^(internal |private |public
+# )?fun ` with no leading whitespace, so it only matches top-level declarations. isNextThreeQuotes
+# and hasTwoConsecutiveSymbolsIgnoreWhitespaces are private *methods of the TomlMultilineString
+# class* (4-space-indented `private fun` inside the class body), which the extractor cannot find at
+# all (unlike the trimMultilineQuotes case above, which finds the *wrong* top-level function --
+# this finds none). integerRepresentationRadix/integerRepresentationPrefix mirror
+# IntegerRepresentation's enum-constructor property values, which are not function bodies and have
+# no extractable source form either way. All four are therefore drift-unguarded by
+# check-mirrors.sh; logged in docs/verification/friction.md rather than left unstated.
