@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..9b96983 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -81,6 +81,7 @@ internal fun hexDigitChar(v: Int): Char {
+         (v == 14) implies (r == 'e')
+         (v == 15) implies (r == 'f')
+     }
++    verify(false)
+     if (v == 0) return '0'
+     if (v == 1) return '1'
+     if (v == 2) return '2'

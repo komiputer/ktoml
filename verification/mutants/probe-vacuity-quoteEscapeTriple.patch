@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..9c47054 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -291,6 +291,7 @@ internal fun quoteEscapeTriple(s: String): String {
+     postconditions<String> { r ->
+         r.length >= s.length
+     }
++    verify(false)
+     var res = ""
+     var i = 0
+     while (i < s.length) {

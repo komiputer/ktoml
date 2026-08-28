@@ -1,0 +1,13 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..5954319 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -420,7 +420,7 @@ internal fun replaceTwoCharSequence(s: String, a: Char, b: Char, r0: Char, r1: C
+             0 <= i && i <= s.length
+             res.length == i
+         }
+-        if (i + 1 < s.length && s[i] == a && s[i + 1] == b) {
++        if (i < s.length && s[i] == a && s[i + 1] == b) {
+             res = res + r0
+             res = res + r1
+             i = i + 2

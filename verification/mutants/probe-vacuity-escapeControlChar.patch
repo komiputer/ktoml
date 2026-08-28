@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..e147f39 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -119,6 +119,7 @@ internal fun escapeControlChar(c: Char): String {
+             (r.length == 6 && r[0] == '\\' && r[1] == 'u')
+         r.length == 2 || r.length == 6
+     }
++    verify(false)
+     if (c == '\t') return "\\t"
+     if (c == '\b') return "\\b"
+     if (c == '\n') return "\\n"

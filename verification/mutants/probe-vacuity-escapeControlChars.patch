@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..a35d4e3 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -211,6 +211,7 @@ internal fun escapeControlChars(s: String, isMultiline: Boolean): String {
+     postconditions<String> { r ->
+         r.length >= s.length
+     }
++    verify(false)
+     var res = ""
+     var slashCount = 0
+     var i = 0

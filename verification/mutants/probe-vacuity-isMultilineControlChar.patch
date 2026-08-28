@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..6e3e956 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -49,6 +49,7 @@ internal fun isMultilineControlChar(c: Char): Boolean {
+         r == (isControlChar(c) && c != '\n' && c != '\r')
+         isControlChar(c) implies (r == (c != '\n' && c != '\r'))
+     }
++    verify(false)
+     return isControlChar(c) && c != '\n' && c != '\r'
+ }
+ 

@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..d12365d 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -183,6 +183,7 @@ internal fun escapeBackslashes(s: String, lastBackslashIndex: Int, slashCount: I
+         r.length == slashCount * 2 || r.length == slashCount * 2 - 1
+         forAll<Int> { (0 <= it && it < r.length) implies (r[it] == '\\') }
+     }
++    verify(false)
+     val isLineEnding = slashCount % 2 != 0 && isMultiline && isLineEndingBackslash(s, lastBackslashIndex)
+     val n = if (isLineEnding) slashCount * 2 - 1 else slashCount * 2
+     return repeatChar('\\', n)

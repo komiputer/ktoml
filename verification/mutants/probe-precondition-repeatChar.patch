@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..870f342 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -144,9 +144,6 @@ internal fun escapeControlChar(c: Char): String {
+  */
+ @AlwaysVerify
+ internal fun repeatChar(c: Char, n: Int): String {
+-    preconditions {
+-        n >= 0
+-    }
+     postconditions<String> { r ->
+         r.length == n
+         forAll<Int> { (0 <= it && it < r.length) implies (r[it] == c) }
