@@ -363,6 +363,7 @@ internal fun getCountOfOccurrencesOfSubstring(s: String, substring: String): Int
         (substring.length <= s.length &&
             forAll<Int> { (0 <= it && it < substring.length) implies (s[it] == substring[it]) }) implies
             (r >= 1)
+        (s.length == 0) implies (r == 0)
     }
     var i = 0
     var count = 0

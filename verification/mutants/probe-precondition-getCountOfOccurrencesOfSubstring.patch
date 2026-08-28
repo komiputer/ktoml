@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index 6cb5aae..f9d5e50 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -354,9 +354,6 @@ internal fun matchesAt(s: String, i: Int, sub: String): Boolean {
+  */
+ @AlwaysVerify
+ internal fun getCountOfOccurrencesOfSubstring(s: String, substring: String): Int {
+-    preconditions {
+-        substring.length >= 1
+-    }
+     postconditions<Int> { r ->
+         r >= 0
+         r * substring.length <= s.length

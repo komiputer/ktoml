@@ -22,8 +22,10 @@ import org.jetbrains.kotlin.formver.plugin.*
  * Mirrors `IntegerRepresentation.radix` (tag order: BINARY=0, DECIMAL=1, GROUPED=2, HEX=3,
  * OCTAL=4, matching the enum's declared order in `IntegerRepresentation.kt`).
  *
- * Proved: exhaustive `when` over the five tags (no `else` branch -- the `preconditions` block rules
- * out any other `Int` reaching Viper), and `radix >= 2` for every case.
+ * Proved: `radix >= 2` for every case, the tag-to-radix mapping case by case, and that radix 10 is
+ * returned only for `DECIMAL`/`GROUPED` -- which, with the `preconditions` block, makes the `when`'s
+ * `else` branch unreachable. That last clause is what gives the precondition provable work to do:
+ * without it every postcondition is satisfied by the `else` branch as well.
  */
 @AlwaysVerify
 @Pure
@@ -37,6 +39,7 @@ internal fun integerRepresentationRadix(tag: Int): Int {
         (tag == 2) implies (r == 10)
         (tag == 3) implies (r == 16)
         (tag == 4) implies (r == 8)
+        (r == 10) implies (tag == 1 || tag == 2)
         r >= 2
     }
     return when (tag) {
@@ -52,8 +55,10 @@ internal fun integerRepresentationRadix(tag: Int): Int {
 /**
  * Mirrors `IntegerRepresentation.prefix` (same tag order as [integerRepresentationRadix]).
  *
- * Proved: exhaustive `when` over the five tags, and `prefix.length` is always `0` or `2`
- * (`"0b"`/`"0x"`/`"0o"` are two characters; `DECIMAL`/`GROUPED` default to `""`).
+ * Proved: `prefix.length` is always `0` or `2` (`"0b"`/`"0x"`/`"0o"` are two characters;
+ * `DECIMAL`/`GROUPED` default to `""`), the tag-to-prefix mapping case by case, and that the empty
+ * prefix belongs only to `DECIMAL`/`GROUPED` -- which makes the `when`'s `else` branch unreachable
+ * and the precondition load-bearing, same as [integerRepresentationRadix].
  */
 @AlwaysVerify
 internal fun integerRepresentationPrefix(tag: Int): String {
@@ -66,6 +71,7 @@ internal fun integerRepresentationPrefix(tag: Int): String {
         (tag == 2) implies (r == "")
         (tag == 3) implies (r == "0x")
         (tag == 4) implies (r == "0o")
+        (r.length == 0) implies (tag == 1 || tag == 2)
         r.length == 0 || r.length == 2
     }
     return when (tag) {

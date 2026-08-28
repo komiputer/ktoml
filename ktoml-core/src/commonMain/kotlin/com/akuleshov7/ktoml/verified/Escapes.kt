@@ -80,6 +80,7 @@ internal fun hexDigitChar(v: Int): Char {
         (v == 13) implies (r == 'd')
         (v == 14) implies (r == 'e')
         (v == 15) implies (r == 'f')
+        (r == 'f') implies (v == 15)
     }
     if (v == 0) return '0'
     if (v == 1) return '1'
