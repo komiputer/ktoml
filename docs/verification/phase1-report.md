@@ -246,7 +246,15 @@ instructs, and recorded in `docs/verification/known-failures.md` as fork diverge
 **Four precondition probes verified when they must fail.** This is the substantive finding of the
 re-run. The previously recorded control-suite result predates the escaping and multiline chunks, so
 those chunks' controls had never actually been executed; running them found four
-precondition-deletion probes passing. All four shared one shape — every postcondition clause guarded
+precondition-deletion probes passing.
+
+That the earlier greens were never verification is confirmed from outside this stage, in the
+workflow driver's own command logs: the escaping stage reported "all 79 controls correctly rejected"
+about twelve minutes after starting, and the multiline stage reported "all 96 controls correctly
+rejected" inside two minutes. At roughly two minutes per verification build, neither number is
+physically possible. The same logs show the escaping stage's first attempt exiting 127 because
+`scripts/run-suite-report.sh` did not exist — the script its brief called for was never written, so
+the graph silently fell back to `run-mutants.sh`. All four shared one shape — every postcondition clause guarded
 by an exact-input equality, and a fallback branch in the body (`else -> 10`, `else -> ""`,
 `return 'f'`) that satisfies the unconditional clauses too — so deleting the precondition changed
 nothing provable. Three were fixed by adding one clause each that the fallback branch violates:
@@ -323,6 +331,15 @@ items marked **new gap** were not anticipated.
    fails. The workaround here is a Gradle task that greps the compiler log for the literal string
    `Viper verification error` and throws — a hack that should not need to exist. Ship the promised
    `verificationErrorSeverity` control and default it to failing. **New gap.**
+
+   This is worse than it first looks, and the evidence is in this project's own history. Two
+   mid-chain stages reported their full control suites green in twelve minutes and in under two —
+   impossible at two minutes per verification build — and one of them had already fallen back from a
+   reporting script that was never written, after exiting 127. Nobody noticed, because when a
+   verification failure reports at `INFO` there is nothing that distinguishes *a gate that passed*
+   from *a gate that never ran*. A tool whose failures do not fail the build cannot be audited by
+   reading its exit status, which is exactly how build graphs audit everything. Failing loudly is
+   not a convenience; it is what makes a green result mean anything at all.
 2. **No versioned release.** The only artifact is `0.1.0-SNAPSHOT` via `publishToMavenLocal`, so
    consuming SnaKt means `mavenLocal()` in `pluginManagement`, whose content is whatever the build
    machine published last. Nobody else can reproduce this fork's build. The plugin SHA is recorded
@@ -424,10 +441,15 @@ long-lived verification stage rather than of this repository.
 
 ## 7. Verdict
 
-Phase 0 and Phase 1 are complete against the plan's scope. All four gates pass from clean. The
-audit found five real problems and closed four of them: four precondition probes that were never
-executed by the recorded run and did no work when they finally were, and five stale control
-patches. The fifth is not closable and is now declared with its reason.
+Phase 0 and Phase 1 are complete against the plan's scope. All four gates pass from clean, after
+fixes in the three categories §4 sets out: the compliance suite (an uninitialized submodule and an
+XPASSing baseline entry), the precondition probes, and five stale control patches.
+
+The probes are where the substance is. Five findings there: one probe missing outright, and four
+probes that had never been executed by the recorded run and turned out to do no work when they
+finally were. Four of the five are closed. The fifth,
+`probe-precondition-getCountOfOccurrencesOfSubstring`, is not closable by any specification and is
+declared with its reason.
 
 What a reader should take away, in one paragraph: **ktoml's character-scanning layer has been
 transcribed into 50 machine-checked functions covering 28 upstream functions, and that transcription
