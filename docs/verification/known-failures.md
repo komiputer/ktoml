@@ -42,3 +42,16 @@ decoder gets a chance to detect the malformed structure and raise `ParseExceptio
 Revisit this exclusion if: ktoml itself bumps its Kotlin version past 2.3.0 upstream (rebase may
 change the behaviour again), or SnaKt publishes a build compatible with an older Kotlin (removing the
 need for fork divergence #1 entirely).
+
+## `valid/spec-1.1.0/common-23.toml` removed from the compliance baseline (fork divergence #4)
+
+`TomlTestBaseline.kt`'s `TomlOneOneValidFeatures` (upstream issue 373) listed this case as a known
+failure. Under this fork's Kotlin 2.3.0 bump it parses correctly, so `TomlTestSuite` fails it as an
+XPASS — the mechanism's designed way of saying "remove this from the baseline". Removed, as the
+failure message instructs.
+
+The case is a float-literal file (`+1.0`, `5e+22`, `-2E-2`, `inf`, `nan`); nothing in this fork
+touches float parsing, and upstream `parsers/`, `utils/` and `writers/` sources are byte-identical
+to `main` on this branch. The change is therefore attributable to the Kotlin/stdlib bump, in the
+favourable direction. Revisit on rebase: if upstream bumps past 2.3.0 the entry may need to come
+back, or upstream may close 373 for this case itself.
