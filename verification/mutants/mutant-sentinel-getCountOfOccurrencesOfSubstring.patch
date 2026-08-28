@@ -1,9 +1,9 @@
 diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
-index 5ca0dac..6c9e977 100644
+index a3d70a8..b6d1beb 100644
 --- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
 +++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
-@@ -365,7 +365,7 @@ internal fun getCountOfOccurrencesOfSubstring(s: String, substring: String): Int
-             (r >= 1)
+@@ -366,7 +366,7 @@ internal fun getCountOfOccurrencesOfSubstring(s: String, substring: String): Int
+         (s.length == 0) implies (r == 0)
      }
      var i = 0
 -    var count = 0
