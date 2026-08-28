@@ -1,0 +1,10 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -360,6 +360,7 @@
+             (0 <= it && it < res.length) implies (res[it] == s[it + lo])
+         }
+     }
++    verify(false)
+     var res = ""
+     var i = lo
+     while (i < hi) {

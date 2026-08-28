@@ -1,0 +1,12 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -32,9 +32,6 @@
+  */
+ @AlwaysVerify
+ internal fun isLineEndingBackslash(s: String, backslashIndex: Int): Boolean {
+-    preconditions {
+-        0 <= backslashIndex && backslashIndex < s.length
+-    }
+     var j = backslashIndex + 1
+     while (j < s.length && s[j] != '\n' && isTomlWhitespace(s[j])) {
+         loopInvariants {

@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..ef3b5fb 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -451,6 +451,7 @@ internal fun replaceEscaped(s: String, allowEscapedQuotesInLiteralStrings: Boole
+     postconditions<String> { r ->
+         r.length == s.length
+     }
++    verify(false)
+     if (escapingDisabled(s, 0, allowEscapedQuotesInLiteralStrings)) {
+         return s
+     }

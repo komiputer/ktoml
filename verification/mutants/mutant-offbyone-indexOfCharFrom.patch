@@ -1,0 +1,13 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+index dc2deea..e62e17b 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+@@ -50,7 +50,7 @@ internal fun indexOfCharFrom(s: String, c: Char, from: Int): Int {
+         (r == -1) implies forAll<Int> { (from <= it && it < s.length) implies (s[it] != c) }
+     }
+     var i = from
+-    while (i < s.length) {
++    while (i <= s.length) {
+         loopInvariants {
+             from <= i && i <= s.length
+             forAll<Int> { (from <= it && it < i) implies (s[it] != c) }

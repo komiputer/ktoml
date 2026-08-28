@@ -1,0 +1,12 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -203,9 +203,6 @@
+     searchChar: Char,
+     startIndex: Int
+ ): Int {
+-    preconditions {
+-        0 <= startIndex && startIndex <= s.length
+-    }
+     postconditions<Int> { r ->
+         r == -1 || (startIndex <= r && r < s.length)
+         (r != -1) implies (s[r] == searchChar)

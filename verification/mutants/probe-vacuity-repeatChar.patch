@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..b75ae8d 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -151,6 +151,7 @@ internal fun repeatChar(c: Char, n: Int): String {
+         r.length == n
+         forAll<Int> { (0 <= it && it < r.length) implies (r[it] == c) }
+     }
++    verify(false)
+     var res = ""
+     var i = 0
+     while (i < n) {

@@ -1,0 +1,10 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -108,6 +108,7 @@
+  */
+ @AlwaysVerify
+ internal fun hasBalancedQuotes(s: String): Boolean {
++    verify(false)
+     return countChar(s, '"') % 2 == 0 && countChar(s, '\'') % 2 == 0
+ }
+ 

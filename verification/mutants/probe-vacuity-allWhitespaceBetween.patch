@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+index dc2deea..49941dd 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+@@ -122,6 +122,7 @@ internal fun allWhitespaceBetween(s: String, from: Int, to: Int): Boolean {
+     postconditions<Boolean> { r ->
+         r == forAll<Int> { (from <= it && it < to) implies isAsciiWhitespace(s[it]) }
+     }
++    verify(false)
+     var i = from
+     var ok = true
+     while (i < to) {

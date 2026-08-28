@@ -1,0 +1,11 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -63,7 +63,7 @@
+     var singleQuoteIsClosed = true
+     var doubleQuoteIsClosed = true
+     var i = startIndex
+-    while (i < s.length) {
++    while (i <= s.length) {
+         loopInvariants {
+             startIndex <= i && i <= s.length
+         }

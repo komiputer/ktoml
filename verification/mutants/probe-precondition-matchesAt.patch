@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index 5ca0dac..4ce98be 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -314,9 +314,6 @@ internal fun trimMultilineQuotes(s: String, quotes: String): String {
+  */
+ @AlwaysVerify
+ internal fun matchesAt(s: String, i: Int, sub: String): Boolean {
+-    preconditions {
+-        0 <= i && i <= s.length
+-    }
+     postconditions<Boolean> { r ->
+         r == (i + sub.length <= s.length &&
+             forAll<Int> { (0 <= it && it < sub.length) implies (s[i + it] == sub[it]) })

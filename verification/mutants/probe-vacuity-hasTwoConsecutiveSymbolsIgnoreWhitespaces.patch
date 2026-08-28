@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+index dc2deea..69b196b 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+@@ -92,6 +92,7 @@ internal fun hasTwoConsecutiveSymbolsIgnoreWhitespaces(value: String, searchSymb
+         (forAll<Int> { (0 <= it && it < value.length) implies (value[it] != searchSymbol) }) implies
+             (r == false)
+     }
++    verify(false)
+     val firstIndex = indexOfCharFrom(value, searchSymbol, 0)
+     if (firstIndex == -1) {
+         return false

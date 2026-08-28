@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..d0d8849 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -89,6 +89,7 @@ internal fun lastIndexOfChar(s: String, c: Char): Int {
+         (r != -1) implies forAll<Int> { (r < it && it < s.length) implies (s[it] != c) }
+         (r == -1) implies forAll<Int> { (0 <= it && it < s.length) implies (s[it] != c) }
+     }
++    verify(false)
+     var i = s.length - 1
+     var result = -1
+     while (i >= 0) {

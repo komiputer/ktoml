@@ -1,0 +1,19 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..30290ab 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -156,13 +156,7 @@ internal fun trimSymbols(s: String, prefix: String, suffix: String): String {
+             prefix.length + suffix.length <= s.length) implies
+             (r.length == s.length - prefix.length - suffix.length &&
+                 forAll<Int> { (0 <= it && it < r.length) implies (r[it] == s[it + prefix.length]) })
+-        (!(prefix.length <= s.length &&
+-            forAll<Int> { (0 <= it && it < prefix.length) implies (s[it] == prefix[it]) } &&
+-            suffix.length <= s.length &&
+-            forAll<Int> {
+-                (0 <= it && it < suffix.length) implies
+-                    (s[s.length - suffix.length + it] == suffix[it])
+-            })) implies (r == s)
++        r == s
+     }
+     if (hasPrefix(s, prefix) && hasSuffix(s, suffix)) {
+         val mid = slice(s, prefix.length, s.length)

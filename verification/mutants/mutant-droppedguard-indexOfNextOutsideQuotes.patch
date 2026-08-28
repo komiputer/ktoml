@@ -1,0 +1,11 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -208,7 +208,7 @@
+     }
+     postconditions<Int> { r ->
+         r == -1 || (startIndex <= r && r < s.length)
+-        (r != -1) implies (s[r] == searchChar)
++        s[r] == searchChar
+         // On input with no quoting to track, -1 really does mean "not present".
+         (forAll<Int> {
+             (startIndex <= it && it < s.length) implies

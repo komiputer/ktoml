@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..6b12813 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -60,9 +60,6 @@ internal fun isMultilineControlChar(c: Char): Boolean {
+ @AlwaysVerify
+ @Pure
+ internal fun hexDigitChar(v: Int): Char {
+-    preconditions {
+-        0 <= v && v <= 15
+-    }
+     postconditions<Char> { r ->
+         (v == 0) implies (r == '0')
+         (v == 1) implies (r == '1')

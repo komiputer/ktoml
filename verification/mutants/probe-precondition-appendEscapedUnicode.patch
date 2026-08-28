@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+index 16b7476..f55ce5a 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Escapes.kt
+@@ -351,9 +351,6 @@ internal fun escapeSpecialCharacters(s: String, multiline: Boolean): String {
+  */
+ @AlwaysVerify
+ internal fun appendEscapedUnicode(fullString: String, marker: Char, codeStartIndex: Int): Int {
+-    preconditions {
+-        0 <= codeStartIndex && codeStartIndex <= fullString.length
+-    }
+     postconditions<Int> { r ->
+         r == -1 || r == 4 || r == 8
+         (marker == 'u') implies (r == -1 || r == 4)

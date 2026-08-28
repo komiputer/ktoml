@@ -1,0 +1,13 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -133,8 +133,8 @@
+ internal fun firstInvalidBareKeyChar(s: String): Int {
+     postconditions<Int> { r ->
+         r == -1 || (0 <= r && r < s.length)
+-        (r != -1) implies (!isLetterOrDigit(s[r]) &&
+-            s[r] != '_' && s[r] != '-' && s[r] != '.' && s[r] != ' ' && s[r] != '\t')
++        !isLetterOrDigit(s[r]) &&
++            s[r] != '_' && s[r] != '-' && s[r] != '.' && s[r] != ' ' && s[r] != '\t'
+     }
+     var singleQuoteIsClosed = true
+     var doubleQuoteIsClosed = true

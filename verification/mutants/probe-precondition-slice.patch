@@ -1,0 +1,12 @@
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Lexing.kt
+@@ -351,9 +351,6 @@
+  */
+ @AlwaysVerify
+ internal fun slice(s: String, lo: Int, hi: Int): String {
+-    preconditions {
+-        0 <= lo && lo <= hi && hi <= s.length
+-    }
+     postconditions<String> { res ->
+         res.length == hi - lo
+         forAll<Int> {

@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..a9fb59c 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -118,6 +118,7 @@ internal fun allEqualFrom(s: String, from: Int, c: Char): Boolean {
+     postconditions<Boolean> { r ->
+         r == forAll<Int> { (from <= it && it < s.length) implies (s[it] == c) }
+     }
++    verify(false)
+     var i = from
+     var ok = true
+     while (i < s.length) {

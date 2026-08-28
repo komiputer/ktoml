@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+index bc8c875..1e76f33 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Trims.kt
+@@ -112,9 +112,6 @@ internal fun lastIndexOfChar(s: String, c: Char): Int {
+  */
+ @AlwaysVerify
+ internal fun allEqualFrom(s: String, from: Int, c: Char): Boolean {
+-    preconditions {
+-        0 <= from && from <= s.length
+-    }
+     postconditions<Boolean> { r ->
+         r == forAll<Int> { (from <= it && it < s.length) implies (s[it] == c) }
+     }
