@@ -1,0 +1,14 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+index dc2deea..9c17205 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/Multiline.kt
+@@ -41,9 +41,6 @@ internal fun isNextThreeQuotes(line: String, index: Int, quote: Char): Boolean {
+  */
+ @AlwaysVerify
+ internal fun indexOfCharFrom(s: String, c: Char, from: Int): Int {
+-    preconditions {
+-        0 <= from && from <= s.length
+-    }
+     postconditions<Int> { r ->
+         r == -1 || (from <= r && r < s.length && s[r] == c)
+         (r != -1) implies forAll<Int> { (from <= it && it < r) implies (s[it] != c) }

@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
+index 0ee8109..0cbc270 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
+@@ -39,6 +39,7 @@ internal fun integerRepresentationRadix(tag: Int): Int {
+         (tag == 4) implies (r == 8)
+         r >= 2
+     }
++    verify(false)
+     return when (tag) {
+         0 -> 2
+         1 -> 10

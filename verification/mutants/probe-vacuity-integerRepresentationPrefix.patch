@@ -1,0 +1,12 @@
+diff --git a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
+index 0ee8109..6be103b 100644
+--- a/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
++++ b/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified/IntegerRepr.kt
+@@ -68,6 +68,7 @@ internal fun integerRepresentationPrefix(tag: Int): String {
+         (tag == 4) implies (r == "0o")
+         r.length == 0 || r.length == 2
+     }
++    verify(false)
+     return when (tag) {
+         0 -> "0b"
+         1 -> ""
