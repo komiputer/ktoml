@@ -23,7 +23,7 @@ extract_function() {
     {
         line = $0
         if (!started) {
-            if (line ~ ("^(internal |private |public )?fun ([A-Za-z0-9_.]+\\.)?" fn "\\(")) {
+            if (line ~ ("^(internal |private |public )?fun (@[A-Za-z]+ )*([A-Za-z0-9_.]+\\.)?" fn "\\(")) {
                 started = 1
             } else {
                 next
