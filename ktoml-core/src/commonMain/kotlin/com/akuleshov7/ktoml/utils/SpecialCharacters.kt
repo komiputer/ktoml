@@ -192,11 +192,17 @@ private fun String.escapeControlChars(isMultiline: Boolean): String {
     return sb.toString()
 }
 
+@AlwaysVerify
 private fun String.escapeBackslashes(
     lastBackslashIndex: Int,
     slashCount: Int,
     isMultiline: Boolean,
 ): String {
+    preconditions { slashCount > 0 }
+    postconditions<String> { r ->
+        r.length == slashCount * 2 || r.length == slashCount * 2 - 1
+        (!isMultiline || slashCount % 2 == 0) implies (r.length == slashCount * 2)
+    }
     val isLineEndingBackslash = slashCount % 2 != 0 &&
             isMultiline &&
             isLineEndingBackslash(lastBackslashIndex)

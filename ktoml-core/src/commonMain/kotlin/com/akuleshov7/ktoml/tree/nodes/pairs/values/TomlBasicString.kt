@@ -9,6 +9,7 @@ import com.akuleshov7.ktoml.parsers.trimQuotes
 import com.akuleshov7.ktoml.utils.convertSpecialCharacters
 import com.akuleshov7.ktoml.utils.escapeSpecialCharacters
 import com.akuleshov7.ktoml.writers.TomlEmitter
+import org.jetbrains.kotlin.formver.plugin.*
 
 /**
  * Toml AST Node for a representation of string values: key = "value" (always should have quotes due to TOML standard)
@@ -80,10 +81,12 @@ public class TomlBasicString internal constructor(
             return this
         }
 
+        @AlwaysVerify
         private fun String.checkCountOfOtherUnescapedQuotes(lineNo: Int): String {
+            postconditions<String> { r -> r == this@checkCountOfOtherUnescapedQuotes }
             // Here we do replace because the following is valid: a = """ \""" """
             // We have 1 escaped quote + 2 unescaped quotes
-            if (this.replace("\\\"", " ").getCountOfOccurrencesOfSubstring("\"\"\"") != 0) {
+            if (this.replace("\\\"", " ", ignoreCase = false).getCountOfOccurrencesOfSubstring("\"\"\"") != 0) {
                 throw ParseException(
                     "Multi-line basic string cannot contain 3 or more quotes (\") in a row." +
                             " Please remove the quotes or use escaping in <$this>",
