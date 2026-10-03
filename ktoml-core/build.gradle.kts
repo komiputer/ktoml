@@ -10,7 +10,7 @@ plugins {
     kotlin("plugin.serialization")
     id("com.akuleshov7.buildutils.publishing-configuration")
     id("com.saveourtool.diktat")
-    id("org.jetbrains.kotlin.formver") version "0.1.0-SNAPSHOT"
+    id("org.jetbrains.kotlin.formver") version "0.1.0-1f8c164a"
 }
 
 kotlin {
