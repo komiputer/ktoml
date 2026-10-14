@@ -1,7 +1,6 @@
 import com.akuleshov7.buildutils.configureSigning
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
@@ -11,7 +10,7 @@ plugins {
     kotlin("plugin.serialization")
     id("com.akuleshov7.buildutils.publishing-configuration")
     id("com.saveourtool.diktat")
-    id("org.jetbrains.kotlin.formver") version "0.1.0-2f23a270"
+    id("org.jetbrains.kotlin.formver") version "0.1.0-39c83975"
 }
 
 kotlin {
@@ -112,19 +111,6 @@ kotlin {
 formver {
     // Reuses successful verifications; the key covers the whole Viper program, the plugin and the verifier.
     verificationCacheDirectory(layout.buildDirectory.dir("verification-cache").get().asFile.path)
-}
-
-// Verification covers the library, not its tests: the plugin applies to every compilation, so the test
-// compilations select no targets for conversion or verification.
-kotlin.targets.configureEach {
-    compilations.matching { it.name == KotlinCompilation.TEST_COMPILATION_NAME }.configureEach {
-        compileTaskProvider.configure {
-            compilerOptions.freeCompilerArgs.addAll(
-                "-P", "plugin:org.jetbrains.kotlin.formver:conversion_targets_selection=no_targets",
-                "-P", "plugin:org.jetbrains.kotlin.formver:verification_targets_selection=no_targets",
-            )
-        }
-    }
 }
 
 configureSigning()

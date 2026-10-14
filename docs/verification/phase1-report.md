@@ -489,6 +489,28 @@ long-lived verification stage rather than of this repository.
   parked turns with near-identical content is precisely the condition that makes the imitation easy
   and the discrepancy hard to spot.
 
+### 6.5 Verifying the test code
+
+The plugin applies to every compilation, so ktoml's own tests are verified along with the library.
+Everything verifiable is verified unless it is marked `@NeverVerify`, and the test code is the
+largest body of ordinary Kotlin in the repository, so it is the best usability data available.
+
+- **One proof failure, annotated.** `ColorIntArraySerializer.deserialize` in the decoder
+  `CustomSerializerTest` indexes an `IntArray` returned by `decodeSerializableValue`. That call is
+  opaque, so the array's size is unknown and the reads of indices 0 to 2 cannot be proved in bounds.
+  It is marked `@NeverVerify` with that reason.
+- **Most test functions are skipped, not verified.** The causes, most frequent first:
+  - calls that omit a default argument of a function compiled without its source. Most are
+    `assertEquals` and `assertFailsWith` from `kotlin.test`, whose `message` parameter is almost
+    never passed; the rest are ktoml functions and constructors, which the test compilation also
+    sees without source;
+  - properties of local classes;
+  - `trimIndent`, `trimMargin`, `listOf` and `mapOf` without specifications;
+  - `@Serializable` classes declared in the test.
+- **Build-time cost.** `compileTestKotlinJvm` takes about 10 s without verification, about 90 s with <!-- agent-lint:approx -->
+  a cold verification cache and about 40 s with a warm one. The library compilation with a cold <!-- agent-lint:approx -->
+  cache takes about 3 min, so verifying the tests adds roughly half again to a cold build. <!-- agent-lint:approx -->
+
 ## 7. Verdict
 
 Phase 0 and Phase 1 are complete against the plan's scope, and Phase 2 has started with six

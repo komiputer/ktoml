@@ -186,3 +186,8 @@ Workaround: `@NeverVerify` with a reason on `TomlArray.write`.
 Expected: the plugin verifies the library code.
 Observed: the plugin applies to every compilation, so the tests are verified too. In the JVM tests it crashes on a backtick name containing `-` (Viper rejects the identifier) and on collection templates in a multiplatform `jvmTest` source set ("A source external function model must have a containing file"), and it reports unproven array indexes in test code. Both crashes reported upstream with reproducers.
 Workaround: the test compilations pass `conversion_targets_selection=no_targets` and `verification_targets_selection=no_targets`, so only the library is verified.
+
+## 2026-10-14 — Re-pin to 0.1.0-39c83975 (test code verified)
+Expected: with the backtick-name and multiplatform `jvmTest` crashes fixed, the tests verify like the library.
+Observed: the test compilations convert and verify. One proof failure: indexing an array from the opaque `decodeSerializableValue`. Most test functions are skipped, mainly because a call that omits a default argument of a function compiled without its source is unsupported; `assertEquals` and `assertFailsWith` from `kotlin.test` hit this in almost every test, and ktoml functions hit it from the separate test compilation. `TomlArray.write` converts past `lastIndex` and is skipped for its `forEachIndexed` lambda, which the plugin does not invoke in place.
+Workaround: `@NeverVerify` with a reason on the failing test serializer. The test compilations are verified with the library.

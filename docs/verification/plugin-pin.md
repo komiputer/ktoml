@@ -1,7 +1,7 @@
 # SnaKt (formver) plugin pin
 
-- Checkout: jormungandr `origin/main` at 2f23a270.
-- Published version: `0.1.0-2f23a270` (the checkout's root `build.gradle.kts` version set to it).
+- Checkout: jormungandr `origin/main` at 39c83975.
+- Published version: `0.1.0-39c83975` (the checkout's root `build.gradle.kts` version set to it).
 - Build: `./gradlew publishToMavenLocal -Dmaven.repo.local=<private repo> -x test`.
 - Consume it the same way: `./gradlew :ktoml-core:compileKotlinJvm -Dmaven.repo.local=<private repo>`.
   The shared `~/.m2` is not used, so other formver builds cannot replace the pinned one.
@@ -17,15 +17,15 @@
 
 ## Artifacts in <private repo>/org/jetbrains/kotlin/formver/
 
-- formver.annotations-0.1.0-2f23a270
-- formver.common-0.1.0-2f23a270
-- formver.compiler-plugin-0.1.0-2f23a270 (shaded jar, ~100MB — bundles Silicon/Scala runtime)
-- formver.gradle-plugin-0.1.0-2f23a270 (+ sources/javadoc jars)
-- org.jetbrains.kotlin.formver.gradle.plugin-0.1.0-2f23a270 (Gradle plugin marker artifact)
+- formver.annotations-0.1.0-39c83975
+- formver.common-0.1.0-39c83975
+- formver.compiler-plugin-0.1.0-39c83975 (shaded jar, ~100MB — bundles Silicon/Scala runtime)
+- formver.gradle-plugin-0.1.0-39c83975 (+ sources/javadoc jars)
+- org.jetbrains.kotlin.formver.gradle.plugin-0.1.0-39c83975 (Gradle plugin marker artifact)
 
 ## Consumer coordinates / setup (per README.md)
 
-Plugin id: `org.jetbrains.kotlin.formver`, version `0.1.0-2f23a270`.
+Plugin id: `org.jetbrains.kotlin.formver`, version `0.1.0-39c83975`.
 
 `settings.gradle.kts`:
 ```kotlin
@@ -41,7 +41,7 @@ pluginManagement {
 ```kotlin
 plugins {
     kotlin("jvm") version "2.3.0"
-    id("org.jetbrains.kotlin.formver") version "0.1.0-2f23a270"
+    id("org.jetbrains.kotlin.formver") version "0.1.0-39c83975"
 }
 
 repositories {

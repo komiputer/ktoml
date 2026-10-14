@@ -16,6 +16,7 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import org.jetbrains.kotlin.formver.plugin.NeverVerify
 
 class CustomSerializerTest {
     object SinglePropertyAsStringSerializer : KSerializer<SingleProperty> {
@@ -90,6 +91,9 @@ class CustomSerializerTest {
         override fun serialize(encoder: Encoder, value: ColorIntArray) {
         }
 
+        // Not verified: the array comes from the opaque `decodeSerializableValue`, so its size is unknown and
+        // the reads of indices 0 to 2 cannot be proved in bounds.
+        @NeverVerify
         override fun deserialize(decoder: Decoder): ColorIntArray {
             val array = decoder.decodeSerializableValue(delegateSerializer)
             return ColorIntArray((array[0] shl 16) or (array[1] shl 8) or array[2])

@@ -27,8 +27,6 @@ public class TomlArray internal constructor(
     @Suppress("UNCHECKED_CAST")
     public fun parse(config: TomlInputConfig = TomlInputConfig()): List<Any> = content as List<Any>
 
-    // Not verified: reading `lastIndex` moves the mapped list, so the plugin rejects the iteration after it.
-    @NeverVerify
     @Suppress("UNCHECKED_CAST")
     public override fun write(
         emitter: TomlEmitter,
