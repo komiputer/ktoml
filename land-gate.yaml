@@ -4,6 +4,9 @@
 # /opt/bots/docs/bots-host/landing.md.
 test_cmd: ["scripts/gate-test.sh"]
 # target_branch: main          # default: origin/HEAD
-# review:
-#   extra_standards: |
-#     - <repo-specific review rules, appended to the packaged brief>
+review:
+  extra_standards: |
+    - Code under ktoml-core/.../verified/ mirrors shipping code and is proved by SnaKt. A change to what
+      a mirrored function computes is a change in behaviour: report it, never auto-fix it. Character
+      sets such as isKotlinWhitespace are checked against the standard library by tests; quote a test
+      or a run, not recollection, when claiming the standard library behaves otherwise.

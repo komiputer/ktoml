@@ -385,11 +385,11 @@ internal fun getCountOfOccurrencesOfSubstring(s: String, substring: String): Int
 @Pure
 internal fun isKotlinWhitespace(c: Char): Boolean {
     postconditions<Boolean> { r ->
-        r == (('\u0009' <= c && c <= '\u000D') || ('\u001C' <= c && c <= '\u0020') || c == '\u0085' || c == '\u00A0' || c == '\u1680' ||
+        r == (('\u0009' <= c && c <= '\u000D') || ('\u001C' <= c && c <= '\u0020') || c == '\u00A0' || c == '\u1680' ||
             ('\u2000' <= c && c <= '\u200A') || c == '\u2028' || c == '\u2029' || c == '\u202F' ||
             c == '\u205F' || c == '\u3000')
     }
-    return ('\u0009' <= c && c <= '\u000D') || ('\u001C' <= c && c <= '\u0020') || c == '\u0085' || c == '\u00A0' || c == '\u1680' ||
+    return ('\u0009' <= c && c <= '\u000D') || ('\u001C' <= c && c <= '\u0020') || c == '\u00A0' || c == '\u1680' ||
         ('\u2000' <= c && c <= '\u200A') || c == '\u2028' || c == '\u2029' || c == '\u202F' ||
         c == '\u205F' || c == '\u3000'
 }
