@@ -3,18 +3,37 @@
 # ktoml-core's verified/ source set (Lexing.kt, Trims.kt, ...).
 #
 # Applies each patch in verification/mutants/ to the verified/ kernel one at a time,
-# runs verification (:ktoml-core:compileKotlinJvm, which fails on a proof failure), asserts
-# that build FAILS, then reverts. A mutant whose build SUCCEEDS means either the
-# mutant didn't change provable behaviour or the harness itself is broken -- in
-# either case this script exits nonzero and names the offending mutant(s).
+# runs verification in the standalone verification/kernel build (compileKotlin fails on a proof
+# failure), asserts that build FAILS with a compiler error, then reverts. A mutant whose build
+# SUCCEEDS means either the mutant didn't change provable behaviour or the harness itself is
+# broken -- in either case this script exits nonzero and names the offending mutant(s). The
+# unmodified kernel must verify first, and a failed build without a compiler error counts as a
+# harness failure, so a broken build cannot pass as a rejected control.
 set -uo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 maven_repo="${SNAKT_MAVEN_REPO:-$HOME/tmp/volatile/snakt-m2}"
 mutants_dir="$repo_root/verification/mutants"
 verified_dir="$repo_root/ktoml-core/src/commonMain/kotlin/com/akuleshov7/ktoml/verified"
+log_dir="$repo_root/verification/kernel/build/run-mutants"
 
 cd "$repo_root"
+
+kotlin_version="$(sed -n 's/.*const val KOTLIN = "\(.*\)".*/\1/p' buildSrc/src/main/kotlin/com/akuleshov7/Versions.kt)"
+formver_version="$(sed -n 's/.*id("org.jetbrains.kotlin.formver") version "\(.*\)".*/\1/p' ktoml-core/build.gradle.kts)"
+if [[ -z "$kotlin_version" || -z "$formver_version" ]]; then
+    echo "run-mutants.sh: could not read the Kotlin version or the formver pin." >&2
+    exit 2
+fi
+mkdir -p "$log_dir"
+
+# Verifies the kernel; the build log goes to $1.
+verify_kernel() {
+    ./gradlew -p verification/kernel --no-daemon compileKotlin -Dmaven.repo.local="$maven_repo" \
+        -PkotlinVersion="$kotlin_version" -PformverVersion="$formver_version" \
+        -Pkotlin.compiler.execution.strategy=in-process "-Dorg.gradle.jvmargs=-Xmx4g -Xss30m -XX:MaxMetaspaceSize=1g" \
+        > "$1" 2>&1
+}
 
 if [[ -n "$(git status --porcelain -- "$verified_dir")" ]]; then
     echo "run-mutants.sh: $verified_dir has uncommitted changes; refusing to run (would revert your work)." >&2
@@ -37,6 +56,11 @@ expected_unfalsifiable=(
     "probe-precondition-getCountOfOccurrencesOfSubstring"
 )
 
+if ! verify_kernel "$log_dir/baseline.log"; then
+    echo "run-mutants.sh: the unmodified kernel does not verify -- see $log_dir/baseline.log" >&2
+    exit 1
+fi
+
 failures=()
 passed_when_should_fail=()
 expected_passes=()
@@ -56,23 +80,25 @@ for patch in "$mutants_dir"/*.patch; do
         [[ "$name" == "$expected" ]] && is_expected=1
     done
 
-    if ./gradlew --no-daemon :ktoml-core:compileKotlinJvm -Dmaven.repo.local="$maven_repo" \
-        -Pkotlin.compiler.execution.strategy=in-process "-Dorg.gradle.jvmargs=-Xmx6g -Xss30m -XX:MaxMetaspaceSize=2g" \
-        > "/tmp/run-mutants-$name.log" 2>&1; then
+    log="$log_dir/$name.log"
+    if verify_kernel "$log"; then
         if [[ $is_expected -eq 1 ]]; then
             echo "  verified -- expected, see the reason in this script's expected_unfalsifiable list"
             expected_passes+=("$name")
         else
-            echo "  VERIFIED (should have failed) -- see /tmp/run-mutants-$name.log"
+            echo "  VERIFIED (should have failed) -- see $log"
             passed_when_should_fail+=("$name")
         fi
-    elif [[ $is_expected -eq 1 ]] && grep -q '^e: .*did not finish within' "/tmp/run-mutants-$name.log" \
-        && ! grep '^e: ' "/tmp/run-mutants-$name.log" | grep -qv 'did not finish within'; then
+    elif [[ $is_expected -eq 1 ]] && grep -q '^e: .*did not finish within' "$log" \
+        && ! grep '^e: ' "$log" | grep -qv 'did not finish within'; then
         echo "  timed out -- expected, see the reason in this script's expected_unfalsifiable list"
         expected_passes+=("$name")
     elif [[ $is_expected -eq 1 ]]; then
         echo "  REJECTED, but listed as unfalsifiable -- remove it from expected_unfalsifiable"
         failures+=("$name (rejected while listed as unfalsifiable)")
+    elif ! grep -q '^e: ' "$log"; then
+        echo "  BUILD FAILED WITHOUT A COMPILER ERROR -- see $log"
+        failures+=("$name (build failed without a compiler error)")
     else
         echo "  rejected, as expected"
     fi

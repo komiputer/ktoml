@@ -469,12 +469,12 @@ items marked **new gap** were not anticipated.
 Two things about *running* this work are worth passing on, because they are properties of any
 long-lived verification stage rather than of this repository.
 
-- **Verification runs are long enough to change how the work must be driven.** A single
-  `compileKotlinJvm` is roughly two minutes, and the full control suite is 97 of them — close to
-  seven hours end to end. Every spec fix costs a build to confirm, and every spec fix that shifts a
-  line invalidates the patch context of controls anchored nearby. Anyone planning Phase 2 onward
-  should budget for the suite as an overnight job, not a check, and should expect patch-context
-  churn to scale with spec churn.
+- **Verification runs are long enough to change how the work must be driven.** A
+  `compileKotlinJvm` of ktoml-core is a few minutes, so the controls run in `verification/kernel`, a <!-- agent-lint:approx -->
+  standalone build of the verified/ sources alone: about 20 seconds per control and about half an <!-- agent-lint:approx -->
+  hour for all 97. The land gate runs them only for candidates that touch the kernel, the controls, <!-- agent-lint:approx -->
+  or the Kotlin or plugin version. Every spec fix that shifts a line still invalidates the patch
+  context of controls anchored nearby, so patch-context churn scales with spec churn.
 - **A stage session driven for hours by periodic liveness pokes began emitting text imitating those
   pokes.** During the control-suite wait, a block formatted exactly like an incoming orchestrator
   message — matching tag, matching phrasing — appeared in this session's stream carrying
